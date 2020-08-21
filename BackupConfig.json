@@ -1,0 +1,70 @@
+{
+  "automated responses": [
+  ],
+  "media only channels": [
+  ],
+  "commands": [
+    {
+      "command": ">bot",
+      "response": "Servo Skull 1137 is a bot created by Ramiris#5376. Please DM Ramiris for information regarding the bot!",
+      "media": false
+    }
+  ],
+  "special commands": [
+    {
+      "command": ">help",
+      "response": "Displays the menu you are looking at right now... funny that..."
+    },
+    {
+      "command": ">add response",
+      "response": "[ADMIN] Creates a prompt to add an automated response."
+    },
+    {
+      "command": ">remove response",
+      "response": "[ADMIN] Creates a prompt to remove an automated response."
+    },
+    {
+      "command": ">add media only",
+      "response": "[ADMIN] Creates a prompt to add a media only channel."
+    },
+    {
+      "command": ">remove media only",
+      "response": "[ADMIN] Creates a prompt to remove a media only channel."
+    },
+    {
+      "command": ">add command",
+      "response": "[ADMIN] Creates a prompt to add a command."
+    },
+    {
+      "command": ">remove command",
+      "response": "[ADMIN] Creates a prompt to remove a command."
+    }
+  ],
+  "mod roles": [
+    "Shipyard Manager"
+  ],
+  "known crashes": [],
+  "welcome message": {
+    "template folder": "../Images/WelcomeTemplates",
+    "colour": [
+      224,
+      19,
+      19
+    ],
+    "font": "../Gothic.otf",
+    "fontsize": 170,
+    "channel": 743438825979641887,
+    "final file": "../Images/WelcomeImage.png"
+  },
+  "ORBAT": {
+    "COMMAND": [
+      {"Role": "Commissar", "Name": "Christoph Valkyr", "ID": 206787852611223552, "AttendingNextOp": null}
+    ],
+    "SUPPORT": [
+      {"Role": "Flight Sergeant", "Name": "R. Ramiris", "ID": 110838934644211712, "AttendingNextOp": true},
+      {"Role": "Pilot", "Name": "CLOSED", "ID": null, "AttendingNextOp": null},
+      {"Role": "Sentinel Corporal", "Name": "C. Crypt", "ID": 189124026013057024, "AttendingNextOp": false},
+      {"Role": "Crewman", "Name": "CLOSED", "ID": null, "AttendingNextOp": null}
+    ]
+  }
+}

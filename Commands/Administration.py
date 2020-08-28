@@ -2,7 +2,6 @@ import asyncio
 import sys
 import discord
 import ImageManipulation
-import ConfigHandler
 
 
 async def Main(self, message, Config):

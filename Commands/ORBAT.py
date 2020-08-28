@@ -1,5 +1,4 @@
 import asyncio
-import json
 import CreateEmbed
 import ConfigHandler
 
@@ -71,7 +70,6 @@ async def Main(self, message, Config):
         if not access:
             return
 
-
         async def set_ORBAT_user(message, user, section_text, role_text):
             # Load Config and Verify Answers
             Config = await ConfigHandler.Open()
@@ -110,7 +108,6 @@ async def Main(self, message, Config):
 
             await message.channel.send("ERROR! Role Not Found OR All Positions Filled!...")
             return False
-
 
         try:
             test = message.mentions[0]

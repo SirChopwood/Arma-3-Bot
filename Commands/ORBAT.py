@@ -151,6 +151,43 @@ async def Main(self, message, Config):
                 print(message.mentions[0], section_text, role_text)
                 await set_ORBAT_user(message, message.mentions[0], section_text, role_text)
 
+    elif message.content.startswith(">discharge"):
+        # Access Checks
+        access = False
+        if message.author.id == 110838934644211712:
+            access = True
+        for role in message.author.roles:
+            if role.name in Config["mod roles"]:
+                access = True
+        if not access:
+            return
+
+        try:
+            user = message.mentions[0]
+        except IndexError:
+            await message.channel.send("No user found, please Ping an active ORBAT user after the command.")
+            return
+
+        # Load Config
+        Config = await ConfigHandler.Open()
+
+        for Section_Old in Config["ORBAT"]:
+            for i in range(len(Config["ORBAT"][Section_Old])):
+                Role_Old = Config["ORBAT"][Section_Old][i]
+                if Role_Old["ID"] == user.id:
+                    Config["ORBAT"][Section_Old][i]["ID"] = None
+                    Config["ORBAT"][Section_Old][i]["Name"] = ""
+                    Config["ORBAT"][Section_Old][i]["AttendingNextOp"] = None
+                    print("User was removed from ", Section_Old, Role_Old)
+
+        await ConfigHandler.Save(Config)
+
+        await message.channel.send(str(
+            user.mention + " has been discharged from the unit by " + message.author.mention))
+        print(str(
+            user.mention + " has been discharged from the unit by " + message.author.mention))
+        await message.delete()
+
     elif message.content.startswith(">rename"):
         # Load Config
         Config = await ConfigHandler.Open()

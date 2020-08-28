@@ -623,6 +623,21 @@
   },
   "announcements": {
     "active": 748301226109567037,
-    "channel": 724762259364118539
+    "channel": 724762259364118539,
+    "displaychannel": 743438825979641887,
+    "displaymessages": {
+      "Commisariat": 748820743478837278,
+      "Command Team": 748820746301603862,
+      "Imperial Navy": 748820749330153572,
+      "Sentinel Platoon": 748820751808856149,
+      "Sisters of Battle": 748820754493079565,
+      "Kasrkin Squad": 748820765259989063,
+      "1 Section": 748820768183550002,
+      "2 Section": 748820771027157092,
+      "3 Section": 748820773640339509,
+      "4 Section": 748820776580415501,
+      "5 Section": 748820786885951548,
+      "Reservists": 748820789213790295
+    }
   }
 }

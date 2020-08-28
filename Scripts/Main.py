@@ -2,7 +2,6 @@
 import discord
 import asyncio
 import CreateEmbed
-import json
 import ImageManipulation
 import ConfigHandler
 
@@ -51,6 +50,21 @@ class Bot(discord.Client):
         user = await self.fetch_user(payload.user_id)
         emoji = payload.emoji
 
+        async def set_status(self, status):
+            Config = await ConfigHandler.Open()
+            for section in Config["ORBAT"]:
+                for i in range(len(Config["ORBAT"][section])):
+                    role = Config["ORBAT"][section][i]
+                    if user.id == role["ID"]:
+                        Config["ORBAT"][section][i]["AttendingNextOp"] = status
+                        found_user = True
+                        await ConfigHandler.Save(Config)
+                        displaychannel = await self.fetch_channel(Config["announcements"]["displaychannel"])
+                        displaymessage = await displaychannel.fetch_message(Config["announcements"]["displaymessages"][str(section)])
+                        embed = CreateEmbed.ORBAT(section)
+                        await displaymessage.edit(content=None, embed=embed)
+            return found_user
+
         Config = await ConfigHandler.Open()
 
         if message.id != Config["announcements"]["active"]:
@@ -58,37 +72,16 @@ class Bot(discord.Client):
         else:
             found_user = False
             if str(emoji) == "<:GreenTick:743466991771451394>":
-                Config = await ConfigHandler.Open()
-                for section in Config["ORBAT"]:
-                    for i in range(len(Config["ORBAT"][section])):
-                        role = Config["ORBAT"][section][i]
-                        if user.id == role["ID"]:
-                            Config["ORBAT"][section][i]["AttendingNextOp"] = True
-                            found_user = True
-                            await ConfigHandler.Save(Config)
-                            print("User '" + user.name + "' IS Attending!")
+                found_user = await set_status(self, True)
+                print("User '" + user.name + "' IS Attending!")
 
             elif str(emoji) == "<:GreyTick:743466991981167138>":
-                Config = await ConfigHandler.Open()
-                for section in Config["ORBAT"]:
-                    for i in range(len(Config["ORBAT"][section])):
-                        role = Config["ORBAT"][section][i]
-                        if user.id == role["ID"]:
-                            Config["ORBAT"][section][i]["AttendingNextOp"] = None
-                            found_user = True
-                            await ConfigHandler.Save(Config)
-                            print("User '" + user.name + "' is UNKNOWN if they are Attending!")
+                found_user = await set_status(self, None)
+                print("User '" + user.name + "' is UNKNOWN if they are Attending!")
 
             elif str(emoji) == "<:RedTick:743466992144744468>":
-                Config = await ConfigHandler.Open()
-                for section in Config["ORBAT"]:
-                    for i in range(len(Config["ORBAT"][section])):
-                        role = Config["ORBAT"][section][i]
-                        if user.id == role["ID"]:
-                            Config["ORBAT"][section][i]["AttendingNextOp"] = False
-                            found_user = True
-                            await ConfigHandler.Save(Config)
-                            print("User '" + user.name + "' is NOT Attending!")
+                found_user = await set_status(self, False)
+                print("User '" + user.name + "' is NOT Attending!")
 
             if not found_user:
                 print("User '" + user.name + "' Is not assigned a Section and Role!")

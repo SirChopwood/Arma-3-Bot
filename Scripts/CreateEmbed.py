@@ -1,10 +1,9 @@
 import discord
 import datetime
-import requests
 import json
+import ConfigHandler
 
-with open("Config.json", "r") as file:
-    Config = json.load(file)
+Config = ConfigHandler.OpenNoSync()
 
 
 # Generic Bot Embed Formats
@@ -30,8 +29,7 @@ def command_list():
 
 # RoleCall
 def ORBAT(section):
-    with open("Config.json", "r") as file:
-        Config = json.load(file)
+    Config = ConfigHandler.OpenNoSync()
     if section not in Config["ORBAT"]:
         return None
     embed = discord.Embed(title=str("776th ORBAT - " + section), colour=852223)
@@ -60,8 +58,7 @@ def ORBAT(section):
 
 
 def rolecall():
-    with open("Config.json", "r") as file:
-        Config = json.load(file)
+    Config = ConfigHandler.OpenNoSync()
 
     embed = discord.Embed(title=str("776th Role Call"), colour=852223)
 
@@ -86,7 +83,6 @@ def rolecall():
         embed.add_field(name=Section, value=str("<:GreenTick:743466991771451394> " + str(attending) + "  <:GreyTick:743466991981167138> " + str(filled_slots-checked_in) + "  <:RedTick:743466992144744468> " + str(not_attending)), inline=False)
     embed.set_footer(text=str(str(total_checked_in) + " / " + str(total_filled_slots) + " Checked In (Total)"))
     return embed
-
 
 
 def announcement(data):

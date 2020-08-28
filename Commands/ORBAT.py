@@ -32,6 +32,7 @@ async def Main(self, message, Config):
                 if role["ID"]:
                     Config["ORBAT"][Section][x]["AttendingNextOp"] = None
         await ConfigHandler.Save(Config)
+
     elif message.content.startswith(">ORBAT"):
         if len(message.content) == 6:
             # Access Checks
@@ -206,3 +207,25 @@ async def Main(self, message, Config):
                     return
 
         await message.channel.send("ERROR! User Not Found in ORBAT...")
+
+    elif message.content.startswith(">display"):
+        # Access Checks
+        access = False
+        if message.author.id == 110838934644211712:
+            access = True
+        for role in message.author.roles:
+            if role.name in Config["mod roles"]:
+                access = True
+        if not access:
+            return
+
+        messagelist = {}
+        for Section in Config["ORBAT"]:
+            embed = CreateEmbed.ORBAT(Section)
+            newmessage = await message.channel.send(content="", embed=embed)
+            messagelist[str(Section)] = newmessage.id
+            await asyncio.sleep(.5)
+
+        Config["announcements"]["displaymessages"] = messagelist
+        Config["announcements"]["displaychannel"] = message.channel.id
+        await ConfigHandler.Save(Config)

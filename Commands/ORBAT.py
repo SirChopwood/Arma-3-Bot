@@ -1,6 +1,7 @@
 import asyncio
 import json
 import CreateEmbed
+import ConfigHandler
 
 
 async def Main(self, message, Config):
@@ -23,17 +24,15 @@ async def Main(self, message, Config):
         await newmsg.add_reaction("<:GreenTick:743466991771451394>")
         await newmsg.add_reaction("<:GreyTick:743466991981167138>")
         await newmsg.add_reaction("<:RedTick:743466992144744468>")
-        with open("Config.json", "r") as file:
-            Config = json.load(file)
-            Config["announcements"]["active"] = newmsg.id
-            Config["announcements"]["channel"] = message.channel.id
-            for Section in Config["ORBAT"]:
-                for x in range(len(Config["ORBAT"][Section])):
-                    role = Config["ORBAT"][Section][x]
-                    if role["ID"]:
-                        Config["ORBAT"][Section][x]["AttendingNextOp"] = None
-        json.dump(Config, open("Config.json", "w"))
-
+        Config = await ConfigHandler.Open()
+        Config["announcements"]["active"] = newmsg.id
+        Config["announcements"]["channel"] = message.channel.id
+        for Section in Config["ORBAT"]:
+            for x in range(len(Config["ORBAT"][Section])):
+                role = Config["ORBAT"][Section][x]
+                if role["ID"]:
+                    Config["ORBAT"][Section][x]["AttendingNextOp"] = None
+        await ConfigHandler.Save(Config)
     elif message.content.startswith(">ORBAT"):
         if len(message.content) == 6:
             # Access Checks
@@ -75,8 +74,7 @@ async def Main(self, message, Config):
 
         async def set_ORBAT_user(message, user, section_text, role_text):
             # Load Config and Verify Answers
-            with open("Config.json", "r") as file:
-                Config = json.load(file)
+            Config = await ConfigHandler.Open()
 
             for x in range(len(Config["ORBAT"][section_text])):
                 Role = Config["ORBAT"][section_text][x]
@@ -101,7 +99,7 @@ async def Main(self, message, Config):
                     else:
                         Config["ORBAT"][section_text][x]["AttendingNextOp"] = None
 
-                    json.dump(Config, open("Config.json", "w"))
+                    await ConfigHandler.Save(Config)
 
                     await message.channel.send(str(
                         user.mention + " has been enlisted to ``" + section_text + " - " + role_text + "`` by " + message.author.mention))
@@ -158,9 +156,7 @@ async def Main(self, message, Config):
 
     elif message.content.startswith(">rename"):
         # Load Config
-        with open("Config.json", "r") as file:
-            Config = json.load(file)
-
+        Config = await ConfigHandler.Open()
         for Section in Config["ORBAT"]:
             for x in range(len(Config["ORBAT"][Section])):
                 Role = Config["ORBAT"][Section][x]
@@ -168,7 +164,7 @@ async def Main(self, message, Config):
                     # Set New Section/Role
                     Config["ORBAT"][Section][x]["Name"] = message.author.display_name
 
-                    json.dump(Config, open("Config.json", "w"))
+                    await ConfigHandler.Save(Config)
 
                     await message.channel.send(
                         str(message.author.mention + " has had their name updated in the ORBAT"))

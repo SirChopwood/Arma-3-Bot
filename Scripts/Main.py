@@ -4,6 +4,7 @@ import asyncio
 import CreateEmbed
 import json
 import ImageManipulation
+import ConfigHandler
 
 # Import Commmands
 import Administration
@@ -11,14 +12,12 @@ import ORBAT
 
 global Config
 
-with open("Config.json", "r") as file:
-    Config = json.load(file)
+Config = ConfigHandler.OpenNoSync()
 
 
 class Bot(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.queue_checker = self.loop.create_task(self.check_time())
 
     async def on_ready(self):
         print('\n\n\nWe have logged in as {0.user}'.format(self))
@@ -52,46 +51,43 @@ class Bot(discord.Client):
         user = await self.fetch_user(payload.user_id)
         emoji = payload.emoji
 
-        with open("Config.json", "r") as file:
-            Config = json.load(file)
+        Config = await ConfigHandler.Open()
+
         if message.id != Config["announcements"]["active"]:
             return
         else:
             found_user = False
             if str(emoji) == "<:GreenTick:743466991771451394>":
-                with open("Config.json", "r") as file:
-                    Config = json.load(file)
+                Config = await ConfigHandler.Open()
                 for section in Config["ORBAT"]:
                     for i in range(len(Config["ORBAT"][section])):
                         role = Config["ORBAT"][section][i]
                         if user.id == role["ID"]:
                             Config["ORBAT"][section][i]["AttendingNextOp"] = True
                             found_user = True
-                            json.dump(Config, open("Config.json", "w"))
+                            await ConfigHandler.Save(Config)
                             print("User '" + user.name + "' IS Attending!")
 
             elif str(emoji) == "<:GreyTick:743466991981167138>":
-                with open("Config.json", "r") as file:
-                    Config = json.load(file)
+                Config = await ConfigHandler.Open()
                 for section in Config["ORBAT"]:
                     for i in range(len(Config["ORBAT"][section])):
                         role = Config["ORBAT"][section][i]
                         if user.id == role["ID"]:
                             Config["ORBAT"][section][i]["AttendingNextOp"] = None
                             found_user = True
-                            json.dump(Config, open("Config.json", "w"))
+                            await ConfigHandler.Save(Config)
                             print("User '" + user.name + "' is UNKNOWN if they are Attending!")
 
             elif str(emoji) == "<:RedTick:743466992144744468>":
-                with open("Config.json", "r") as file:
-                    Config = json.load(file)
+                Config = await ConfigHandler.Open()
                 for section in Config["ORBAT"]:
                     for i in range(len(Config["ORBAT"][section])):
                         role = Config["ORBAT"][section][i]
                         if user.id == role["ID"]:
                             Config["ORBAT"][section][i]["AttendingNextOp"] = False
                             found_user = True
-                            json.dump(Config, open("Config.json", "w"))
+                            await ConfigHandler.Save(Config)
                             print("User '" + user.name + "' is NOT Attending!")
 
             if not found_user:
@@ -106,8 +102,7 @@ class Bot(discord.Client):
         if message.author.bot:
             return
 
-        with open("Config.json", "r") as file:
-            Config = json.load(file)
+        Config = await ConfigHandler.Open()
 
         if message.content.startswith(">help"):
             await message.author.send(content=None, embed=CreateEmbed.command_list())
@@ -116,7 +111,6 @@ class Bot(discord.Client):
         await ORBAT.Main(self, message, Config)
 
 
-with open("Secrets.json", "r") as Secrets:
-    Secrets = json.load(Secrets)
+Secrets = ConfigHandler.Secret()
 client = Bot()
 client.run(Secrets["token"])

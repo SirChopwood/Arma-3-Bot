@@ -2,6 +2,7 @@ import asyncio
 import sys
 import discord
 import ImageManipulation
+import ConfigHandler
 
 
 async def Main(self, message, Config):
@@ -21,4 +22,5 @@ async def Main(self, message, Config):
 
     elif message.content.startswith(">welcome") and message.author.id == 110838934644211712:
         ImageManipulation.welcome_plate(message.author.name)
+        Config = await ConfigHandler.Open()
         await message.channel.send(content="", file=discord.File(Config['welcome message']['final file']))

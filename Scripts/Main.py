@@ -114,6 +114,11 @@ class Bot(discord.Client):
         if message.content.startswith(">help"):
             await message.author.send(content=None, embed=CreateEmbed.command_list())
 
+        elif message.content.startswith(">broadcast") and message.author.id == 110838934644211712:
+            channel = self.get_channel(724762259364118539)
+            await channel.send(content=message.content[11:])
+            await message.delete()
+
         elif message.content.startswith(">say") and message.author.id == 110838934644211712:
             await message.channel.send(message.content[5:])
             await message.delete()

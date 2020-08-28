@@ -6,6 +6,8 @@ import ImageManipulation
 import ConfigHandler
 
 # Import Commmands
+import sys
+sys.path.insert(0,'../Commands')
 import Administration
 import ORBAT
 

@@ -3,11 +3,10 @@ import datetime
 import json
 import ConfigHandler
 
-Config = ConfigHandler.OpenNoSync()
-
 
 # Generic Bot Embed Formats
-def command_list():
+def command_list(guildid):
+    Config = ConfigHandler.OpenNoSync(guildid)
     embed = discord.Embed(title=str("What I do..."), colour=852223,
                           timestamp=datetime.datetime.now())
 
@@ -28,8 +27,8 @@ def command_list():
 
 
 # RoleCall
-def ORBAT(section):
-    Config = ConfigHandler.OpenNoSync()
+def ORBAT(section, guildid):
+    Config = ConfigHandler.OpenNoSync(guildid)
     if section not in Config["ORBAT"]:
         return None
     embed = discord.Embed(title=str("776th ORBAT - " + section), colour=852223)
@@ -40,15 +39,18 @@ def ORBAT(section):
         if role["ID"]:
             filled_slots += 1
             if role["AttendingNextOp"] is None:
-                embed.add_field(name=str("**" + role["Role"] + "**"), value=str("<:GreyTick:743466991981167138> " + role["Name"]),
-                            inline=False)
+                embed.add_field(name=str("**" + role["Role"] + "**"),
+                                value=str("<:GreyTick:743466991981167138> " + role["Name"]),
+                                inline=False)
             elif role["AttendingNextOp"] is True:
-                embed.add_field(name=str("**" + role["Role"] + "**"), value=str("<:GreenTick:743466991771451394> " + role["Name"]),
-                            inline=False)
+                embed.add_field(name=str("**" + role["Role"] + "**"),
+                                value=str("<:GreenTick:743466991771451394> " + role["Name"]),
+                                inline=False)
                 checked_in += 1
             elif role["AttendingNextOp"] is False:
-                embed.add_field(name=str("**" + role["Role"] + "**"), value=str("<:RedTick:743466992144744468> " + role["Name"]),
-                            inline=False)
+                embed.add_field(name=str("**" + role["Role"] + "**"),
+                                value=str("<:RedTick:743466992144744468> " + role["Name"]),
+                                inline=False)
                 checked_in += 1
 
         else:
@@ -57,8 +59,8 @@ def ORBAT(section):
     return embed
 
 
-def rolecall():
-    Config = ConfigHandler.OpenNoSync()
+def rolecall(guildid):
+    Config = ConfigHandler.OpenNoSync(guildid)
 
     embed = discord.Embed(title=str("776th Role Call"), colour=852223)
 
@@ -80,7 +82,9 @@ def rolecall():
                     checked_in += 1
         total_checked_in += checked_in
         total_filled_slots += filled_slots
-        embed.add_field(name=Section, value=str("<:GreenTick:743466991771451394> " + str(attending) + "  <:GreyTick:743466991981167138> " + str(filled_slots-checked_in) + "  <:RedTick:743466992144744468> " + str(not_attending)), inline=False)
+        embed.add_field(name=Section, value=str(
+            "<:GreenTick:743466991771451394> " + str(attending) + "  <:GreyTick:743466991981167138> " + str(
+                filled_slots - checked_in) + "  <:RedTick:743466992144744468> " + str(not_attending)), inline=False)
     embed.set_footer(text=str(str(total_checked_in) + " / " + str(total_filled_slots) + " Checked In (Total)"))
     return embed
 
@@ -91,4 +95,3 @@ def announcement(data):
     embed.add_field(name="Time/Date:", value=data[1], inline=False)
     embed.set_footer(text="Please react below for roll call.")
     return embed
-

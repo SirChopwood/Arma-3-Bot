@@ -11,10 +11,6 @@ sys.path.insert(0,'../Commands')
 import Administration
 import ORBAT
 
-global Config
-
-Config = ConfigHandler.OpenNoSync()
-
 
 class Bot(discord.Client):
     def __init__(self, *args, **kwargs):
@@ -26,7 +22,6 @@ class Bot(discord.Client):
         await illya.send("Bot Restarted")
         activity = discord.Activity(name='for heretics!!', type=discord.ActivityType.watching)
         await self.change_presence(activity=activity)
-        # await self.get_channel(Config["announcements"]["channel"]).fetch_message(Config["announcements"]["active"])
 
     async def check_time(self):
         await self.wait_until_ready()
@@ -53,21 +48,21 @@ class Bot(discord.Client):
         emoji = payload.emoji
 
         async def set_status(self, status):
-            Config = await ConfigHandler.Open()
+            Config = await ConfigHandler.Open(message.guild.id)
             for section in Config["ORBAT"]:
                 for i in range(len(Config["ORBAT"][section])):
                     role = Config["ORBAT"][section][i]
                     if user.id == role["ID"]:
                         Config["ORBAT"][section][i]["AttendingNextOp"] = status
                         found_user = True
-                        await ConfigHandler.Save(Config)
+                        await ConfigHandler.Save(Config, message.guild.id)
                         displaychannel = await self.fetch_channel(Config["announcements"]["displaychannel"])
                         displaymessage = await displaychannel.fetch_message(Config["announcements"]["displaymessages"][str(section)])
-                        embed = CreateEmbed.ORBAT(section)
+                        embed = CreateEmbed.ORBAT(section, message.guild.id)
                         await displaymessage.edit(content=None, embed=embed)
             return found_user
 
-        Config = await ConfigHandler.Open()
+        Config = await ConfigHandler.Open(message.guild.id)
 
         if message.id != Config["announcements"]["active"]:
             return
@@ -97,10 +92,10 @@ class Bot(discord.Client):
         if message.author.bot:
             return
 
-        Config = await ConfigHandler.Open()
+        Config = await ConfigHandler.Open(message.guild.id)
 
         if message.content.startswith(">help"):
-            await message.author.send(content=None, embed=CreateEmbed.command_list())
+            await message.author.send(content=None, embed=CreateEmbed.command_list(message.guild.id))
 
         await Administration.Main(self, message, Config)
         await ORBAT.Main(self, message, Config)

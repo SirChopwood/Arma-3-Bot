@@ -1,18 +1,21 @@
 import json
 
 
-def OpenNoSync():
-    with open("Config.json", "r") as file:
+def OpenNoSync(guildid):
+    filepath = "../ConfigFiles/" + str(guildid) + ".json"
+    with open(filepath, "r") as file:
         return json.load(file)
 
 
-async def Open():
-    with open("Config.json", "r") as file:
+async def Open(guildid):
+    filepath = "../ConfigFiles/" + str(guildid) + ".json"
+    with open(filepath, "r") as file:
         return json.load(file)
 
 
-async def Save(data):
-    json.dump(data, open("Config.json", "w"), indent=2, separators=(',', ': '))
+async def Save(data, guildid):
+    filepath = "../ConfigFiles/" + str(guildid) + ".json"
+    json.dump(data, open(filepath, "w"), indent=2, separators=(',', ': '))
 
 
 def Secret():

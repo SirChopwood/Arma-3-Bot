@@ -23,7 +23,7 @@ async def Main(self, message, Config):
         await newmsg.add_reaction("<:GreenTick:743466991771451394>")
         await newmsg.add_reaction("<:GreyTick:743466991981167138>")
         await newmsg.add_reaction("<:RedTick:743466992144744468>")
-        Config = await ConfigHandler.Open()
+        Config = await ConfigHandler.Open(message.guild.id)
         Config["announcements"]["active"] = newmsg.id
         Config["announcements"]["channel"] = message.channel.id
         for Section in Config["ORBAT"]:
@@ -31,7 +31,7 @@ async def Main(self, message, Config):
                 role = Config["ORBAT"][Section][x]
                 if role["ID"]:
                     Config["ORBAT"][Section][x]["AttendingNextOp"] = None
-        await ConfigHandler.Save(Config)
+        await ConfigHandler.Save(Config, message.guild.id)
 
     elif message.content.startswith(">ORBAT"):
         if len(message.content) == 6:
@@ -46,18 +46,18 @@ async def Main(self, message, Config):
                 return
 
             for Section in Config["ORBAT"]:
-                embed = CreateEmbed.ORBAT(Section)
+                embed = CreateEmbed.ORBAT(Section, message.guild.id)
                 await message.channel.send(content="", embed=embed)
                 await asyncio.sleep(.5)
         else:
-            embed = CreateEmbed.ORBAT(message.content[7:])
+            embed = CreateEmbed.ORBAT(message.content[7:], message.guild.id)
             if embed is None:
                 await message.channel.send("Section not found!")
             else:
                 await message.channel.send(content="", embed=embed)
 
     elif message.content.startswith(">rolecall"):
-        embed = CreateEmbed.rolecall()
+        embed = CreateEmbed.rolecall(message.guild.id)
         await message.channel.send(content="", embed=embed)
 
     elif message.content.startswith(">enlist"):
@@ -73,7 +73,7 @@ async def Main(self, message, Config):
 
         async def set_ORBAT_user(message, user, section_text, role_text):
             # Load Config and Verify Answers
-            Config = await ConfigHandler.Open()
+            Config = await ConfigHandler.Open(message.guild.id)
 
             for x in range(len(Config["ORBAT"][section_text])):
                 Role = Config["ORBAT"][section_text][x]
@@ -98,7 +98,7 @@ async def Main(self, message, Config):
                     else:
                         Config["ORBAT"][section_text][x]["AttendingNextOp"] = None
 
-                    await ConfigHandler.Save(Config)
+                    await ConfigHandler.Save(Config, message.guild.id)
 
                     await message.channel.send(str(
                         user.mention + " has been enlisted to ``" + section_text + " - " + role_text + "`` by " + message.author.mention))
@@ -170,7 +170,7 @@ async def Main(self, message, Config):
             return
 
         # Load Config
-        Config = await ConfigHandler.Open()
+        Config = await ConfigHandler.Open(message.guild.id)
 
         for Section_Old in Config["ORBAT"]:
             for i in range(len(Config["ORBAT"][Section_Old])):
@@ -181,7 +181,7 @@ async def Main(self, message, Config):
                     Config["ORBAT"][Section_Old][i]["AttendingNextOp"] = None
                     print("User was removed from ", Section_Old, Role_Old)
 
-        await ConfigHandler.Save(Config)
+        await ConfigHandler.Save(Config, message.guild.id)
 
         await message.channel.send(str(
             user.mention + " has been discharged from the unit by " + message.author.mention))
@@ -191,7 +191,7 @@ async def Main(self, message, Config):
 
     elif message.content.startswith(">rename"):
         # Load Config
-        Config = await ConfigHandler.Open()
+        Config = await ConfigHandler.Open(message.guild.id)
         for Section in Config["ORBAT"]:
             for x in range(len(Config["ORBAT"][Section])):
                 Role = Config["ORBAT"][Section][x]
@@ -199,7 +199,7 @@ async def Main(self, message, Config):
                     # Set New Section/Role
                     Config["ORBAT"][Section][x]["Name"] = message.author.display_name
 
-                    await ConfigHandler.Save(Config)
+                    await ConfigHandler.Save(Config, message.guild.id)
 
                     await message.channel.send(
                         str(message.author.mention + " has had their name updated in the ORBAT"))
@@ -221,11 +221,11 @@ async def Main(self, message, Config):
 
         messagelist = {}
         for Section in Config["ORBAT"]:
-            embed = CreateEmbed.ORBAT(Section)
+            embed = CreateEmbed.ORBAT(Section, message.guild.id)
             newmessage = await message.channel.send(content="", embed=embed)
             messagelist[str(Section)] = newmessage.id
             await asyncio.sleep(.5)
 
         Config["announcements"]["displaymessages"] = messagelist
         Config["announcements"]["displaychannel"] = message.channel.id
-        await ConfigHandler.Save(Config)
+        await ConfigHandler.Save(Config, message.guild.id)

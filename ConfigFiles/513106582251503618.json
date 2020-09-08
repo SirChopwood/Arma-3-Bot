@@ -1,0 +1,63 @@
+{
+  "special commands": [
+    {
+      "command": ">help",
+      "response": "Displays the menu you are looking at right now... funny that..."
+    },
+    {
+      "command": ">ORBAT (Section)",
+      "response": "Displays all roll call status embeds unless specifed section after command. (may be slightly delayed due to discord rate limiting.)\n['Commisariat', 'Command Team', 'Imperial Navy', 'Sentinel Platoon', 'Sisters of Battle', 'Kasrkin Squad', '1 Section', '2 Section', '3 Section', '4 Section', '5 Section', 'Reservists']\n"
+    },
+    {
+      "command": ">announce",
+      "response": "[ADMIN] Will create an announcement with automated roll call. Simply react to the message to check in."
+    },
+    {
+      "command": ">enlist @user#num",
+      "response": "[ADMIN] Prompts user to promote target to a position in the ORBAT"
+    },
+    {
+      "command": ">rename",
+      "response": "Updates the user's name on the ORBAT."
+    }
+  ],
+  "mod roles": [
+    "Shipyard Manager",
+    "Admin"
+  ],
+  "welcome message": {
+    "template folder": "../Images/WelcomeTemplates",
+    "colour": [
+      224,
+      19,
+      19
+    ],
+    "font": "../Gothic.otf",
+    "fontsize": 170,
+    "channel": 743438825979641887,
+    "final file": "../Images/WelcomeImage.png"
+  },
+  "ORBAT": {
+    "bruh": [
+      {
+        "Role": "Commissar",
+        "Name": "ruben9107",
+        "ID": 105229446692229120,
+        "AttendingNextOp": true
+      },
+      {
+        "Role": "Commissar",
+        "Name": "Commissar Christoph Valkyr",
+        "ID": 206787852611223552,
+        "AttendingNextOp": true
+      }
+    ]
+  },
+  "announcements": {
+    "active": 0,
+    "channel": 0,
+    "displaychannel": 0,
+    "displaymessages": {
+    }
+  }
+}

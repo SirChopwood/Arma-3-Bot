@@ -127,3 +127,4 @@ dmypy.json
 .pyre/
 Thumbs.db
 Scripts/Secrets.json
+/ConfigFiles/

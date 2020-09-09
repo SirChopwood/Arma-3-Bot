@@ -41,7 +41,7 @@
       {
         "Role": "Platoon Commander",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": true
       }
     ],
@@ -55,19 +55,19 @@
       {
         "Role": "Co-Pilot",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Leading Aircraftman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Crewman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       }
     ],
@@ -75,61 +75,61 @@
       {
         "Role": "Section Commander",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Second In-Command",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       }
     ],
@@ -137,61 +137,61 @@
       {
         "Role": "Section Commander",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Second In-Command",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       }
     ],
@@ -199,61 +199,61 @@
       {
         "Role": "Section Commander",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Second In-Command",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       }
     ],
@@ -261,61 +261,61 @@
       {
         "Role": "Section Commander",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Second In-Command",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       }
     ],
@@ -323,61 +323,61 @@
       {
         "Role": "Section Commander",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Second In-Command",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       },
       {
         "Role": "Rifleman",
         "Name": "",
-        "ID": 0,
+        "ID": null,
         "AttendingNextOp": null
       }
     ],

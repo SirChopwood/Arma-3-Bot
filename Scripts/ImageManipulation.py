@@ -1,12 +1,12 @@
 import json
 import os
 import random
+import ConfigHandler
 from PIL import Image, ImageDraw, ImageFont
 
-with open("Config.json", "r") as file:
-    Config = json.load(file)
 
-def welcome_plate(name):
+def welcome_plate(name, guildid):
+    Config = ConfigHandler.Open(guildid)
     folder = Config['welcome message']['template folder'] # 1600 700
     template_found = False
     while not template_found:

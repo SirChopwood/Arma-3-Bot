@@ -84,8 +84,8 @@ class Bot(discord.Client):
                 print("User '" + user.name + "' Is not assigned a Section and Role!")
 
     async def on_member_join(self, user):
-        Config = await ConfigHandler.Open(user.guild)
-        ImageManipulation.welcome_plate(user.name)
+        Config = await ConfigHandler.Open(user.guild.id)
+        ImageManipulation.welcome_plate(user.name, user.guild.id)
         channel = self.get_channel(Config["welcome message"]["channel"])
         await channel.send(content="", file=discord.File(Config['welcome message']['final file']))
 

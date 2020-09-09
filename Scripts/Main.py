@@ -84,9 +84,23 @@ class Bot(discord.Client):
                 print("User '" + user.name + "' Is not assigned a Section and Role!")
 
     async def on_member_join(self, user):
+        Config = await ConfigHandler.Open(user.guild)
         ImageManipulation.welcome_plate(user.name)
         channel = self.get_channel(Config["welcome message"]["channel"])
         await channel.send(content="", file=discord.File(Config['welcome message']['final file']))
+
+    async def on_member_remove(self, user):
+        Config = await ConfigHandler.Open(user.guild)
+        for Section in Config["ORBAT"]:
+            for x in range(len(Config["ORBAT"][Section])):
+                Role = Config["ORBAT"][Section][x]
+                if Role["ID"] == user.id:
+                    # Set New Section/Role
+                    Config["ORBAT"][Section][x]["Name"] = ""
+                    Config["ORBAT"][Section][x]["ID"] = 0
+                    Config["ORBAT"][Section][x]["AttendingNextOp"] = None
+                    print(str(user.display_name) + " has left " + str(user.guild.name) + " while on the ORBAT.")
+                    await ConfigHandler.Save(Config, user.guild.id)
 
     async def on_message(self, message):
         if message.author.bot:

@@ -178,7 +178,7 @@
         "Role": "Sergeant",
         "Name": "Sgt. Issolaris Sicarian",
         "ID": 350664695147003907,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       },
       {
         "Role": "Trooper",
@@ -204,7 +204,7 @@
         "Role": "Section Commander",
         "Name": "Sgt. A. Methril",
         "ID": 163346031906390026,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       },
       {
         "Role": "Second In-Command",
@@ -240,7 +240,7 @@
         "Role": "Guardsman",
         "Name": "VGdsm. R. Santo",
         "ID": 346401947676311555,
-        "AttendingNextOp": null
+        "AttendingNextOp": false
       },
       {
         "Role": "Guardsman",
@@ -364,7 +364,7 @@
         "Role": "Guardsman",
         "Name": "Gdsm. C. Wraith",
         "ID": 342388489297592321,
-        "AttendingNextOp": false
+        "AttendingNextOp": true
       },
       {
         "Role": "Guardsman",
@@ -374,8 +374,8 @@
       },
       {
         "Role": "Guardsman",
-        "Name": "Gdsm. W. Esel",
-        "ID": 224621913455067147,
+        "Name": "",
+        "ID": 0,
         "AttendingNextOp": null
       },
       {

@@ -55,19 +55,19 @@
       {
         "Role": "Co-Pilot",
         "Name": "",
-        "ID": null,
+        "ID": 0,
         "AttendingNextOp": null
       },
       {
         "Role": "Leading Aircraftman",
         "Name": "",
-        "ID": null,
+        "ID": 0,
         "AttendingNextOp": null
       },
       {
         "Role": "Crewman",
         "Name": "",
-        "ID": null,
+        "ID": 0,
         "AttendingNextOp": null
       }
     ],

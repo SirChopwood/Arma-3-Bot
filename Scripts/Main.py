@@ -90,7 +90,7 @@ class Bot(discord.Client):
         await channel.send(content="", file=discord.File(Config['welcome message']['final file']))
 
     async def on_member_remove(self, user):
-        Config = await ConfigHandler.Open(user.guild)
+        Config = await ConfigHandler.Open(user.guild.id)
         for Section in Config["ORBAT"]:
             for x in range(len(Config["ORBAT"][Section])):
                 Role = Config["ORBAT"][Section][x]

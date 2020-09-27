@@ -33,6 +33,14 @@ async def Main(self, message, Config):
                     Config["ORBAT"][Section][x]["AttendingNextOp"] = None
         await ConfigHandler.Save(Config, message.guild.id)
 
+    elif message.content.startswith(">edit"):
+        channel = await self.fetch_channel(Config["announcements"]["channel"])
+        message = await channel.fetch_message(Config["announcements"]["active"])
+        announcement = message.content[10:]
+        announcement = announcement.split("|")
+        embed = CreateEmbed.announcement(announcement)
+        await message.edit(content=None, embed=embed)
+
     elif message.content.startswith(">ORBAT"):
         if len(message.content) == 6:
             # Access Checks

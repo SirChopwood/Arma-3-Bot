@@ -48,7 +48,7 @@
         "Role": "Commissar",
         "Name": "Commissar Christoph Valkyr",
         "ID": 206787852611223552,
-        "AttendingNextOp": false
+        "AttendingNextOp": null
       },
       {
         "Role": "Junior Commissar",
@@ -80,13 +80,13 @@
         "Role": "Quartermaster",
         "Name": "Quartermaster. 1309-97CW",
         "ID": 380001984465600512,
-        "AttendingNextOp": false
+        "AttendingNextOp": null
       },
       {
         "Role": "Lieutenant",
         "Name": "Lt. M. Greyson",
         "ID": 146845024900874240,
-        "AttendingNextOp": false
+        "AttendingNextOp": true
       },
       {
         "Role": "Vox Operator",
@@ -100,12 +100,12 @@
         "Role": "Flight Sergeant",
         "Name": "FltSgt R. Ramiris",
         "ID": 110838934644211712,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       },
       {
         "Role": "Pilot",
-        "Name": "",
-        "ID": null,
+        "Name": "Cpl. M. Hollow",
+        "ID": 257897396283899904,
         "AttendingNextOp": null
       },
       {
@@ -222,31 +222,31 @@
         "Role": "Guardsman",
         "Name": "VGdsm. U. Vona XXIV",
         "ID": 117322017291763719,
+        "AttendingNextOp": true
+      },
+      {
+        "Role": "Guardsman",
+        "Name": "Gdsm. A. Noniem",
+        "ID": 557855274208198657,
         "AttendingNextOp": null
       },
       {
         "Role": "Guardsman",
-        "Name": "",
-        "ID": null,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman",
-        "Name": "",
-        "ID": null,
-        "AttendingNextOp": null
+        "Name": "Gdsm. L. Hessman",
+        "ID": 325646814420271117,
+        "AttendingNextOp": true
       },
       {
         "Role": "Guardsman",
         "Name": "Gdsm. S. Coral",
         "ID": 272151009202012160,
-        "AttendingNextOp": null
+        "AttendingNextOp": false
       },
       {
         "Role": "Guardsman",
         "Name": "VGdsm. R. Santo",
         "ID": 346401947676311555,
-        "AttendingNextOp": false
+        "AttendingNextOp": true
       },
       {
         "Role": "Guardsman",
@@ -264,7 +264,7 @@
         "Role": "Guardsman",
         "Name": "VGdsm. S. Haddock",
         "ID": 185155702619242496,
-        "AttendingNextOp": true
+        "AttendingNextOp": null
       }
     ],
     "2 Section": [
@@ -272,7 +272,7 @@
         "Role": "Section Commander",
         "Name": "Sgt. S. Rude",
         "ID": 189414684913303552,
-        "AttendingNextOp": false
+        "AttendingNextOp": true
       },
       {
         "Role": "Second In-Command",
@@ -282,8 +282,8 @@
       },
       {
         "Role": "Guardsman",
-        "Name": "Gdsm. C. Malleator",
-        "ID": 558714599285850123,
+        "Name": "Gdsm. M. Duke",
+        "ID": 189769841966710784,
         "AttendingNextOp": true
       },
       {
@@ -296,7 +296,7 @@
         "Role": "Guardsman",
         "Name": "Gdsm. F. Grask",
         "ID": 373545278361305088,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       },
       {
         "Role": "Guardsman",
@@ -314,19 +314,19 @@
         "Role": "Guardsman",
         "Name": "Gdsm. S. Mulley",
         "ID": 217335916455395329,
-        "AttendingNextOp": false
+        "AttendingNextOp": null
       },
       {
         "Role": "Guardsman",
         "Name": "Gdsm. J. Azhakar",
         "ID": 403605112670388244,
-        "AttendingNextOp": true
+        "AttendingNextOp": null
       },
       {
         "Role": "Guardsman",
-        "Name": "VGdsm. M. Hollow",
-        "ID": 257897396283899904,
-        "AttendingNextOp": true
+        "Name": "Gdsm. L. Helix",
+        "ID": 278236961511178251,
+        "AttendingNextOp": null
       }
     ],
     "3 Section": [
@@ -338,33 +338,33 @@
       },
       {
         "Role": "Second In-Command",
-        "Name": "",
-        "ID": null,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman",
-        "Name": "",
-        "ID": null,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman",
-        "Name": "Gdsm. C. Sanders",
+        "Name": "VGdsm. C. Sanders",
         "ID": 188754010969341953,
         "AttendingNextOp": true
       },
       {
         "Role": "Guardsman",
+        "Name": "Gdsm. O. Vulcan",
+        "ID": 204493502095032320,
+        "AttendingNextOp": true
+      },
+      {
+        "Role": "Guardsman",
+        "Name": "Gdsm. I. Heilrendre",
+        "ID": 120695321511723008,
+        "AttendingNextOp": null
+      },
+      {
+        "Role": "Guardsman",
         "Name": "Gdsm. C. Jackal",
         "ID": 268493066355212289,
-        "AttendingNextOp": false
+        "AttendingNextOp": true
       },
       {
         "Role": "Guardsman",
         "Name": "Gdsm. D. Azekiel",
         "ID": 195097596270739456,
-        "AttendingNextOp": null
+        "AttendingNextOp": false
       },
       {
         "Role": "Guardsman",
@@ -374,21 +374,21 @@
       },
       {
         "Role": "Guardsman",
-        "Name": "Gdsm. B. Jones",
-        "ID": 135874531553181697,
+        "Name": "Gdsm. J. Saarni",
+        "ID": 252174109692133376,
         "AttendingNextOp": null
       },
       {
         "Role": "Guardsman",
         "Name": "Gdsm. A. Kol",
         "ID": 634098851564879883,
-        "AttendingNextOp": false
+        "AttendingNextOp": true
       },
       {
         "Role": "Guardsman",
         "Name": "Gdsm. A. Calladar",
         "ID": 267125991065911296,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       }
     ],
     "4 Section": [
@@ -518,56 +518,8 @@
     "Reservists": [
       {
         "Role": "Guardsman [1 Section]",
-        "Name": "WS. A. Noniem",
-        "ID": 557855274208198657,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman [1 Section]",
         "Name": "VGdsm. B. Jim",
         "ID": 219048637337042944,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman [1 Section]",
-        "Name": "",
-        "ID": null,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman [2 Section]",
-        "Name": "WS. L. Hessman",
-        "ID": 325646814420271117,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman [2 Section]",
-        "Name": "",
-        "ID": null,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman [2 Section]",
-        "Name": "",
-        "ID": null,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman [3 Section]",
-        "Name": "WS. O. Vulcan",
-        "ID": 204493502095032320,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman [3 Section]",
-        "Name": "WS. M. Duke",
-        "ID": 189769841966710784,
-        "AttendingNextOp": null
-      },
-      {
-        "Role": "Guardsman [3 Section]",
-        "Name": "",
-        "ID": null,
         "AttendingNextOp": null
       },
       {
@@ -645,7 +597,7 @@
     ]
   },
   "announcements": {
-    "active": 754738731810029598,
+    "active": 759462211524624384,
     "channel": 724762259364118539,
     "displaychannel": 747125846451683458,
     "displaymessages": {

@@ -97,7 +97,7 @@ class Bot(discord.Client):
                 if Role["ID"] == user.id:
                     # Set New Section/Role
                     Config["ORBAT"][Section][x]["Name"] = ""
-                    Config["ORBAT"][Section][x]["ID"] = 0
+                    Config["ORBAT"][Section][x]["ID"] = None
                     Config["ORBAT"][Section][x]["AttendingNextOp"] = None
                     print(str(user.display_name) + " has left " + str(user.guild.name) + " while on the ORBAT.")
                     await ConfigHandler.Save(Config, user.guild.id)

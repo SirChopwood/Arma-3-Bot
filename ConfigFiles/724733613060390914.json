@@ -80,7 +80,7 @@
         "Role": "Quartermaster",
         "Name": "Quartermaster. 1309-97CW",
         "ID": 380001984465600512,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       },
       {
         "Role": "Lieutenant",
@@ -106,7 +106,7 @@
         "Role": "Pilot",
         "Name": "Cpl. M. Hollow",
         "ID": 257897396283899904,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       },
       {
         "Role": "Pilot",
@@ -178,25 +178,25 @@
         "Role": "Sergeant",
         "Name": "Sgt. Issolaris Sicarian",
         "ID": 350664695147003907,
-        "AttendingNextOp": true
+        "AttendingNextOp": null
       },
       {
         "Role": "Trooper",
         "Name": "Tpr. A. Crowe",
         "ID": 105229446692229120,
-        "AttendingNextOp": true
+        "AttendingNextOp": null
       },
       {
         "Role": "Trooper",
         "Name": "Tpr. D. Veltana",
         "ID": 416315903509266462,
-        "AttendingNextOp": true
+        "AttendingNextOp": null
       },
       {
         "Role": "Trooper",
         "Name": "Tpr. A. Niner",
         "ID": 208719417759105025,
-        "AttendingNextOp": false
+        "AttendingNextOp": null
       },
       {
         "Role": "Trooper",
@@ -222,13 +222,13 @@
         "Role": "Guardsman",
         "Name": "VGdsm. U. Vona XXIV",
         "ID": 117322017291763719,
-        "AttendingNextOp": true
+        "AttendingNextOp": null
       },
       {
         "Role": "Guardsman",
         "Name": "Gdsm. A. Noniem",
         "ID": 557855274208198657,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       },
       {
         "Role": "Guardsman",
@@ -240,7 +240,7 @@
         "Role": "Guardsman",
         "Name": "Gdsm. S. Coral",
         "ID": 272151009202012160,
-        "AttendingNextOp": false
+        "AttendingNextOp": true
       },
       {
         "Role": "Guardsman",
@@ -264,7 +264,7 @@
         "Role": "Guardsman",
         "Name": "VGdsm. S. Haddock",
         "ID": 185155702619242496,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       }
     ],
     "2 Section": [
@@ -272,13 +272,13 @@
         "Role": "Section Commander",
         "Name": "Sgt. S. Rude",
         "ID": 189414684913303552,
-        "AttendingNextOp": true
+        "AttendingNextOp": null
       },
       {
         "Role": "Second In-Command",
         "Name": "Cpl. J. Enote",
         "ID": 201843040489308160,
-        "AttendingNextOp": false
+        "AttendingNextOp": null
       },
       {
         "Role": "Guardsman",
@@ -314,7 +314,7 @@
         "Role": "Guardsman",
         "Name": "Gdsm. S. Mulley",
         "ID": 217335916455395329,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       },
       {
         "Role": "Guardsman",
@@ -326,7 +326,7 @@
         "Role": "Guardsman",
         "Name": "Gdsm. L. Helix",
         "ID": 278236961511178251,
-        "AttendingNextOp": null
+        "AttendingNextOp": true
       }
     ],
     "3 Section": [
@@ -338,15 +338,15 @@
       },
       {
         "Role": "Second In-Command",
-        "Name": "VGdsm. C. Sanders",
-        "ID": 188754010969341953,
-        "AttendingNextOp": true
+        "Name": "",
+        "ID": null,
+        "AttendingNextOp": null
       },
       {
         "Role": "Guardsman",
         "Name": "Gdsm. O. Vulcan",
         "ID": 204493502095032320,
-        "AttendingNextOp": true
+        "AttendingNextOp": false
       },
       {
         "Role": "Guardsman",
@@ -364,7 +364,7 @@
         "Role": "Guardsman",
         "Name": "Gdsm. D. Azekiel",
         "ID": 195097596270739456,
-        "AttendingNextOp": false
+        "AttendingNextOp": null
       },
       {
         "Role": "Guardsman",
@@ -376,13 +376,13 @@
         "Role": "Guardsman",
         "Name": "Gdsm. J. Saarni",
         "ID": 252174109692133376,
-        "AttendingNextOp": null
+        "AttendingNextOp": false
       },
       {
         "Role": "Guardsman",
         "Name": "Gdsm. A. Kol",
         "ID": 634098851564879883,
-        "AttendingNextOp": true
+        "AttendingNextOp": null
       },
       {
         "Role": "Guardsman",
@@ -562,7 +562,7 @@
         "Role": "Guardsman",
         "Name": "Gdsm. T. Viper",
         "ID": 244165326332362752,
-        "AttendingNextOp": false
+        "AttendingNextOp": null
       },
       {
         "Role": "Guardsman",
@@ -597,7 +597,7 @@
     ]
   },
   "announcements": {
-    "active": 759462211524624384,
+    "active": 759815174525419550,
     "channel": 724762259364118539,
     "displaychannel": 747125846451683458,
     "displaymessages": {

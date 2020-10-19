@@ -10,6 +10,7 @@ import sys
 sys.path.insert(0,'../Commands')
 import Administration
 import ORBAT
+import FunCommands
 
 
 class Bot(discord.Client):
@@ -48,6 +49,7 @@ class Bot(discord.Client):
         emoji = payload.emoji
 
         async def set_status(self, status):
+            found_user = False
             Config = await ConfigHandler.Open(message.guild.id)
             for section in Config["ORBAT"]:
                 for i in range(len(Config["ORBAT"][section])):
@@ -113,7 +115,7 @@ class Bot(discord.Client):
 
         await Administration.Main(self, message, Config)
         await ORBAT.Main(self, message, Config)
-
+        await FunCommands.Main(self, message, Config)
 
 Secrets = ConfigHandler.Secret()
 client = Bot()

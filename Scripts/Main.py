@@ -69,7 +69,7 @@ class Bot(discord.Client):
                         displaychannel = await self.fetch_channel(Config["announcements"]["displaychannel"])
                         displaymessage = await displaychannel.fetch_message(
                             Config["announcements"]["displaymessages"][str(section)])
-                        embed = CreateEmbed.ORBAT(section, message.guild.id)
+                        embed = CreateEmbed.ORBAT(section, Config)
                         await displaymessage.edit(content=None, embed=embed)
             return found_user
 

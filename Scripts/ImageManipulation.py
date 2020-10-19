@@ -5,8 +5,7 @@ import ConfigHandler
 from PIL import Image, ImageDraw, ImageFont
 
 
-def welcome_plate(name, guildid):
-    Config = ConfigHandler.Open(guildid)
+def welcome_plate(name, Config):
     folder = Config['welcome message']['template folder'] # 1600 700
     template_found = False
     while not template_found:

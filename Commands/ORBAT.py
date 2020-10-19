@@ -23,7 +23,6 @@ async def Main(self, message, Config):
         await newmsg.add_reaction("<:GreenTick:743466991771451394>")
         await newmsg.add_reaction("<:GreyTick:743466991981167138>")
         await newmsg.add_reaction("<:RedTick:743466992144744468>")
-        Config = await ConfigHandler.Open(message.guild.id)
         Config["announcements"]["active"] = newmsg.id
         Config["announcements"]["channel"] = message.channel.id
         for Section in Config["ORBAT"]:
@@ -31,7 +30,7 @@ async def Main(self, message, Config):
                 role = Config["ORBAT"][Section][x]
                 if role["ID"]:
                     Config["ORBAT"][Section][x]["AttendingNextOp"] = None
-        await ConfigHandler.Save(Config, message.guild.id)
+        await self.mongo.set_config(guildid=message.guild.id, config=Config)
 
     elif message.content.startswith(">edit"):
         channel = await self.fetch_channel(Config["announcements"]["channel"])
@@ -54,18 +53,18 @@ async def Main(self, message, Config):
                 return
 
             for Section in Config["ORBAT"]:
-                embed = CreateEmbed.ORBAT(Section, message.guild.id)
+                embed = CreateEmbed.ORBAT(Section, Config)
                 await message.channel.send(content="", embed=embed)
                 await asyncio.sleep(.5)
         else:
-            embed = CreateEmbed.ORBAT(message.content[7:], message.guild.id)
+            embed = CreateEmbed.ORBAT(message.content[7:], Config)
             if embed is None:
                 await message.channel.send("Section not found!")
             else:
                 await message.channel.send(content="", embed=embed)
 
     elif message.content.startswith(">rolecall"):
-        embed = CreateEmbed.rolecall(message.guild.id)
+        embed = CreateEmbed.rolecall(Config)
         await message.channel.send(content="", embed=embed)
 
     elif message.content.startswith(">enlist"):
@@ -79,10 +78,7 @@ async def Main(self, message, Config):
         if not access:
             return
 
-        async def set_ORBAT_user(message, user, section_text, role_text):
-            # Load Config and Verify Answers
-            Config = await ConfigHandler.Open(message.guild.id)
-
+        async def set_ORBAT_user(message, user, section_text, role_text, Config):
             for x in range(len(Config["ORBAT"][section_text])):
                 Role = Config["ORBAT"][section_text][x]
                 if role_text == Role["Role"] and Role["ID"] is None:
@@ -106,7 +102,7 @@ async def Main(self, message, Config):
                     else:
                         Config["ORBAT"][section_text][x]["AttendingNextOp"] = None
 
-                    await ConfigHandler.Save(Config, message.guild.id)
+                    await self.mongo.set_config(guildid=message.guild.id, config=Config)
 
                     await message.channel.send(str(
                         user.mention + " has been enlisted to ``" + section_text + " - " + role_text + "`` by " + message.author.mention))
@@ -129,7 +125,7 @@ async def Main(self, message, Config):
             print(message_split)
             if len(message_split) == 3:
                 print(message.mentions[0], message_split[1], message_split[2])
-                await set_ORBAT_user(message, message.mentions[0], message_split[1], message_split[2])
+                await set_ORBAT_user(message, message.mentions[0], message_split[1], message_split[2], Config)
             else:
                 # Questions
                 sections = []
@@ -158,7 +154,7 @@ async def Main(self, message, Config):
                 await role_question.delete()
                 await role_answer.delete()
                 print(message.mentions[0], section_text, role_text)
-                await set_ORBAT_user(message, message.mentions[0], section_text, role_text)
+                await set_ORBAT_user(message, message.mentions[0], section_text, role_text, Config)
 
     elif message.content.startswith(">discharge"):
         # Access Checks
@@ -177,9 +173,6 @@ async def Main(self, message, Config):
             await message.channel.send("No user found, please Ping an active ORBAT user after the command.")
             return
 
-        # Load Config
-        Config = await ConfigHandler.Open(message.guild.id)
-
         for Section_Old in Config["ORBAT"]:
             for i in range(len(Config["ORBAT"][Section_Old])):
                 Role_Old = Config["ORBAT"][Section_Old][i]
@@ -189,7 +182,7 @@ async def Main(self, message, Config):
                     Config["ORBAT"][Section_Old][i]["AttendingNextOp"] = None
                     print("User was removed from ", Section_Old, Role_Old)
 
-        await ConfigHandler.Save(Config, message.guild.id)
+        await self.mongo.set_config(guildid=message.guild.id, config=Config)
 
         await message.channel.send(str(
             user.mention + " has been discharged from the unit by " + message.author.mention))
@@ -199,7 +192,6 @@ async def Main(self, message, Config):
 
     elif message.content.startswith(">rename"):
         # Load Config
-        Config = await ConfigHandler.Open(message.guild.id)
         for Section in Config["ORBAT"]:
             for x in range(len(Config["ORBAT"][Section])):
                 Role = Config["ORBAT"][Section][x]
@@ -207,7 +199,7 @@ async def Main(self, message, Config):
                     # Set New Section/Role
                     Config["ORBAT"][Section][x]["Name"] = message.author.display_name
 
-                    await ConfigHandler.Save(Config, message.guild.id)
+                    await self.mongo.set_config(guildid=message.guild.id, config=Config)
 
                     await message.channel.send(
                         str(message.author.mention + " has had their name updated in the ORBAT"))
@@ -229,11 +221,11 @@ async def Main(self, message, Config):
 
         messagelist = {}
         for Section in Config["ORBAT"]:
-            embed = CreateEmbed.ORBAT(Section, message.guild.id)
+            embed = CreateEmbed.ORBAT(Section, Config)
             newmessage = await message.channel.send(content="", embed=embed)
             messagelist[str(Section)] = newmessage.id
             await asyncio.sleep(.5)
 
         Config["announcements"]["displaymessages"] = messagelist
         Config["announcements"]["displaychannel"] = message.channel.id
-        await ConfigHandler.Save(Config, message.guild.id)
+        await self.mongo.set_config(guildid=message.guild.id, config=Config)

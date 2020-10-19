@@ -4,10 +4,12 @@ import asyncio
 import CreateEmbed
 import ImageManipulation
 import ConfigHandler
+import datetime
 
 # Import Commmands
 import sys
-sys.path.insert(0,'../Commands')
+
+sys.path.insert(0, '../Commands')
 import Administration
 import ORBAT
 import FunCommands
@@ -16,20 +18,26 @@ import FunCommands
 class Bot(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.mongo = ConfigHandler.MongoDataBase()
 
     async def on_ready(self):
-        print('\n\n\nWe have logged in as {0.user}'.format(self))
-        illya = self.get_user(110838934644211712)
-        await illya.send("Bot Restarted")
+        print('===| Logged In as {0.user} |==='.format(self))
         activity = discord.Activity(name='for heretics!!', type=discord.ActivityType.watching)
         await self.change_presence(activity=activity)
 
-    async def check_time(self):
-        await self.wait_until_ready()
+    async def on_resumed(self):
+        print('===| Connection Resumed as {0.user} |==='.format(self))
+        owner = self.get_user(110838934644211712)
+        print(owner)
+        await owner.send(str(
+            "Bot has restarted!\nTime: ``" + str(datetime.datetime.now()) + "``.\nMongoDB Status: ``" + str(
+                self.mongo.client.server_info()['ok']) + " | " + str(
+                self.mongo.client.server_info()['version']) + "``"))
+        activity = discord.Activity(name='for heretics!!', type=discord.ActivityType.watching)
+        await self.change_presence(activity=activity)
 
-        # do action here
-
-        await asyncio.sleep(1)
+    async def on_disconnect(self):
+        print('>>> Connection Lost at {0} <<<'.format(str(datetime.datetime.now())))
 
     async def make_response_check(self, user):
         def check(message):
@@ -50,21 +58,22 @@ class Bot(discord.Client):
 
         async def set_status(self, status):
             found_user = False
-            Config = await ConfigHandler.Open(message.guild.id)
+            Config = await self.mongo.get_config(guildid=message.guild.id)
             for section in Config["ORBAT"]:
                 for i in range(len(Config["ORBAT"][section])):
                     role = Config["ORBAT"][section][i]
                     if user.id == role["ID"]:
                         Config["ORBAT"][section][i]["AttendingNextOp"] = status
                         found_user = True
-                        await ConfigHandler.Save(Config, message.guild.id)
+                        await self.mongo.set_config(guildid=message.guild.id, config=Config)
                         displaychannel = await self.fetch_channel(Config["announcements"]["displaychannel"])
-                        displaymessage = await displaychannel.fetch_message(Config["announcements"]["displaymessages"][str(section)])
+                        displaymessage = await displaychannel.fetch_message(
+                            Config["announcements"]["displaymessages"][str(section)])
                         embed = CreateEmbed.ORBAT(section, message.guild.id)
                         await displaymessage.edit(content=None, embed=embed)
             return found_user
 
-        Config = await ConfigHandler.Open(message.guild.id)
+        Config = await self.mongo.get_config(guildid=message.guild.id)
 
         if message.id != Config["announcements"]["active"]:
             return
@@ -86,13 +95,13 @@ class Bot(discord.Client):
                 print("User '" + user.name + "' Is not assigned a Section and Role!")
 
     async def on_member_join(self, user):
-        Config = await ConfigHandler.Open(user.guild.id)
-        ImageManipulation.welcome_plate(user.name, user.guild.id)
+        Config = await self.mongo.get_config(guildid=user.guild.id)
+        ImageManipulation.welcome_plate(user.name, Config)
         channel = self.get_channel(Config["welcome message"]["channel"])
         await channel.send(content="", file=discord.File(Config['welcome message']['final file']))
 
     async def on_member_remove(self, user):
-        Config = await ConfigHandler.Open(user.guild.id)
+        Config = await self.mongo.get_config(guildid=user.guild.id)
         for Section in Config["ORBAT"]:
             for x in range(len(Config["ORBAT"][Section])):
                 Role = Config["ORBAT"][Section][x]
@@ -102,20 +111,21 @@ class Bot(discord.Client):
                     Config["ORBAT"][Section][x]["ID"] = None
                     Config["ORBAT"][Section][x]["AttendingNextOp"] = None
                     print(str(user.display_name) + " has left " + str(user.guild.name) + " while on the ORBAT.")
-                    await ConfigHandler.Save(Config, user.guild.id)
+                    await self.mongo.set_config(guildid=user.guild.id, config=Config)
 
     async def on_message(self, message):
         if message.author.bot:
             return
 
-        Config = await ConfigHandler.Open(message.guild.id)
+        Config = await self.mongo.get_config(guildid=message.guild.id)
 
         if message.content.startswith(">help"):
-            await message.author.send(content=None, embed=CreateEmbed.command_list(message.guild.id))
+            await message.author.send(content=None, embed=CreateEmbed.command_list(Config))
 
         await Administration.Main(self, message, Config)
         await ORBAT.Main(self, message, Config)
         await FunCommands.Main(self, message, Config)
+
 
 Secrets = ConfigHandler.Secret()
 client = Bot()

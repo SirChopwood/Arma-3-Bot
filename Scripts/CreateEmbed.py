@@ -5,8 +5,7 @@ import ConfigHandler
 
 
 # Generic Bot Embed Formats
-def command_list(guildid):
-    Config = ConfigHandler.OpenNoSync(guildid)
+def command_list(Config):
     embed = discord.Embed(title=str("What I do..."), colour=852223,
                           timestamp=datetime.datetime.now())
 
@@ -27,8 +26,7 @@ def command_list(guildid):
 
 
 # RoleCall
-def ORBAT(section, guildid):
-    Config = ConfigHandler.OpenNoSync(guildid)
+def ORBAT(section, Config):
     if section not in Config["ORBAT"]:
         return None
     embed = discord.Embed(title=str("776th ORBAT - " + section), colour=852223)
@@ -59,9 +57,7 @@ def ORBAT(section, guildid):
     return embed
 
 
-def rolecall(guildid):
-    Config = ConfigHandler.OpenNoSync(guildid)
-
+def rolecall(Config):
     embed = discord.Embed(title=str("776th Role Call"), colour=852223)
 
     total_filled_slots = 0

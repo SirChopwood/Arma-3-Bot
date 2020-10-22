@@ -14,6 +14,8 @@ async def Main(self, message, Config):
                 access = True
         if not access:
             return
+        if message.channel.id != Config["announcements"]["channel"]:
+            message.channel.send("Warning - Announcement created in a new channel.")
 
         # make announcement
         announcement = message.content[10:]

@@ -25,11 +25,11 @@ class Bot(discord.Client):
         activity = discord.Activity(name='for heretics!!', type=discord.ActivityType.watching)
         await self.change_presence(activity=activity)
 
-    async def on_resumed(self):
-        print('===| Connection Resumed as {0.user} at {1} |==='.format(self, str(datetime.datetime.now())))
+    # async def on_resumed(self):
+        # print('===| Connection Resumed as {0.user} at {1} |==='.format(self, str(datetime.datetime.now())))
 
-    async def on_disconnect(self):
-        print('>>> Connection Lost at {0} <<<'.format(str(datetime.datetime.now())))
+    # async def on_disconnect(self):
+        # print('>>> Connection Lost at {0} <<<'.format(str(datetime.datetime.now())))
 
     async def make_response_check(self, user):
         def check(message):

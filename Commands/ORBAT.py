@@ -20,7 +20,7 @@ async def Main(self, message, Config):
         # make announcement
         announcement = message.content[10:]
         announcement = announcement.split("|")
-        embed = CreateEmbed.announcement(announcement)
+        embed = CreateEmbed.announcement(announcement, Config)
         newmsg = await message.channel.send(content=None, embed=embed)
         await newmsg.add_reaction("<:GreenTick:743466991771451394>")
         await newmsg.add_reaction("<:GreyTick:743466991981167138>")
@@ -39,7 +39,7 @@ async def Main(self, message, Config):
         message = await channel.fetch_message(Config["announcements"]["active"])
         announcement = message.content[10:]
         announcement = announcement.split("|")
-        embed = CreateEmbed.announcement(announcement)
+        embed = CreateEmbed.announcement(announcement, Config)
         await message.edit(content=None, embed=embed)
 
     elif message.content.startswith(">ORBAT"):

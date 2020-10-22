@@ -9,9 +9,9 @@ def command_list(Config):
     embed = discord.Embed(title=str("What I do..."), colour=852223,
                           timestamp=datetime.datetime.now())
 
-    embed.set_author(name="Servo Skull 0776-1058-5391-1A",
+    embed.set_author(name="Logistics Officer Mason",
                      icon_url="https://cdn.discordapp.com/attachments/743445776491085855/743449150065999912/PFP.jpg")
-    embed.set_footer(text="Servo Skull 0776-1058-5391-1A",
+    embed.set_footer(text="by Ramiris#5376",
                      icon_url="https://cdn.discordapp.com/attachments/743445776491085855/743449150065999912/PFP.jpg")
 
     embed.add_field(name="**__Commands__**",
@@ -29,7 +29,7 @@ def command_list(Config):
 def ORBAT(section, Config):
     if section not in Config["ORBAT"]:
         return None
-    embed = discord.Embed(title=str("776th ORBAT - " + section), colour=852223)
+    embed = discord.Embed(title=str(Config["guild_name"] + " - " + section), colour=852223)
 
     checked_in = 0
     filled_slots = 0
@@ -58,7 +58,7 @@ def ORBAT(section, Config):
 
 
 def rolecall(Config):
-    embed = discord.Embed(title=str("776th Role Call"), colour=852223)
+    embed = discord.Embed(title=str(Config["guild_name"] + " Role Call"), colour=852223)
 
     total_filled_slots = 0
     total_checked_in = 0
@@ -85,8 +85,8 @@ def rolecall(Config):
     return embed
 
 
-def announcement(data):
-    embed = discord.Embed(title=str("776th Operation Announcement"), colour=852223)
+def announcement(data, Config):
+    embed = discord.Embed(title=str(Config["guild_name"] + " Operation Announcement"), colour=852223)
     embed.add_field(name="Operation Name:", value=data[0], inline=False)
     embed.add_field(name="Time/Date:", value=data[1], inline=False)
     embed.set_footer(text="Please react below for roll call.")

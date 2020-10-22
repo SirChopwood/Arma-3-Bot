@@ -28,29 +28,38 @@ async def Main(self, message, Config):
             await newmessage.add_reaction("⚠")
             await asyncio.sleep(2)
 
-            def check(reaction, user):
-                if reaction.emoji == "765631116647464970" and user == message.mentions[
+            def executeionsave(reaction, user):
+                if reaction.emoji == "⚠" and user == message.mentions[
                     0] and reaction.message.id == newmessage.id:
                     raise InterruptedError
-                elif reaction.emoji == "765631116647464970" and user != message.mentions[
+                elif reaction.emoji == "⚠" and user != message.mentions[
                     0] and reaction.message.id == newmessage.id:
                     raise TypeError
-                else:
-                    print(reaction.emoji == "765631116647464970", user == message.mentions[0],
-                          reaction.message.id == newmessage.id)
 
             try:
-                await self.wait_for('reaction_add', timeout=1.0, check=check)
+                await self.wait_for('reaction_add', timeout=3.0, check=executeionsave)
             except asyncio.TimeoutError:
+                Executions = await self.mongo.get_executions(message.guild.id)
+                try:
+                    current_executions = int(Executions[str(message.author.id)])
+                    Executions[str(message.author.id)] = current_executions + 1
+                except KeyError:
+                    Executions[str(message.author.id)] = 1
+                    current_executions = 1
+                await self.mongo.set_executions(message.guild.id, Executions)
                 await newmessage.delete()
                 await message.channel.send(str("***" + str(message.mentions[
-                                                               0].display_name) + " was just executed by " + message.author.display_name + " in the name of The Emperor!***" + "\nhttps://media.tenor.com/images/b08d0c2008c7a78134f50914e0ae965e/tenor.gif"))
+                                                               0].display_name) + " was just executed by " + message.author.display_name + " in the name of The Emperor!***\n*This was offense #" + str(current_executions) + "*\nhttps://media.tenor.com/images/b08d0c2008c7a78134f50914e0ae965e/tenor.gif"))
                 await message.delete()
+                await newmessage.delete()
+
             except InterruptedError:
                 await message.channel.send(str("***" + str(message.mentions[
                                                                0].display_name) + " was about to be executed by " + message.author.display_name + ", but gracefully dodged it just in time!***"))
                 await message.delete()
-            except RuntimeError:
+                await newmessage.delete()
+            except TypeError:
                 await message.channel.send(str("***" + str(message.mentions[
                                                                0].display_name) + " was about to be executed by " + message.author.display_name + ", but was shoved out the way just in time!***"))
                 await message.delete()
+                await newmessage.delete()

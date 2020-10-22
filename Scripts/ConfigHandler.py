@@ -8,6 +8,7 @@ class MongoDataBase:
         self.client = pymongo.MongoClient("mongodb+srv://ServoSkull:SOPnFduiJ2cqqjFq@cluster0.lg0yx.mongodb.net/<dbname>?retryWrites=true&w=majority")
         self.database = self.client['776thCadian']
         self.configs = self.database['Configs']
+        self.executions = self.database['Executions']
 
     def get_config_nosync(self, guildid):
         return self.configs.find_one({"guild_id": guildid})
@@ -20,6 +21,14 @@ class MongoDataBase:
 
     async def set_config(self, guildid, config):
         return self.configs.replace_one({"guild_id": guildid}, config)
+
+    async def get_executions(self, guildid):
+        return self.executions.find_one({"guild_id": guildid})
+
+    async def set_executions(self, guildid, executions):
+        return self.executions.replace_one({"guild_id": guildid}, executions)
+
+
 
 
 def OpenNoSync(guildid):

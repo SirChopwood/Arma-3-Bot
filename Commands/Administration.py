@@ -6,7 +6,7 @@ import ImageManipulation
 
 async def Main(self, message, Config):
     if message.content.startswith(">broadcast") and message.author.id == 110838934644211712:
-        channel = self.get_channel(724762259364118539)
+        channel = self.get_channel(Config['announcements']['channel'])
         await channel.send(content=message.content[11:])
         await message.delete()
 
@@ -20,5 +20,11 @@ async def Main(self, message, Config):
         sys.exit(0)
 
     elif message.content.startswith(">welcome") and message.author.id == 110838934644211712:
-        ImageManipulation.welcome_plate(message.author.name)
+        ImageManipulation.welcome_plate(message.author.name, Config)
         await message.channel.send(content="", file=discord.File(Config['welcome message']['final file']))
+
+    elif message.content.startswith(">getmongoconfig") and message.author.id == 110838934644211712:
+        print(await self.mongo.get_config(message.guild.id))
+
+    elif message.content.startswith(">getmongoexecutions") and message.author.id == 110838934644211712:
+        print(await self.mongo.get_executions(message.guild.id))

@@ -47,25 +47,23 @@ class Bot(discord.Client):
         message = await channel.fetch_message(payload.message_id)
         user = await self.fetch_user(payload.user_id)
         emoji = payload.emoji
+        Config = await self.mongo.get_config(guildid=message.guild.id)
 
         async def set_status(self, status):
             found_user = False
-            Config = await self.mongo.get_config(guildid=message.guild.id)
-            for section in Config["ORBAT"]:
-                for i in range(len(Config["ORBAT"][section])):
-                    role = Config["ORBAT"][section][i]
+            Orbat = await self.mongo.get_orbats(guildid=message.guild.id)
+            for section in Orbat:
+                for i in range(len(Orbat[section]['Members'])):
+                    role = Orbat[section]['Members'][i]
                     if user.id == role["ID"]:
-                        Config["ORBAT"][section][i]["AttendingNextOp"] = status
+                        Orbat[section]['Members'][i]["AttendingNextOp"] = status
                         found_user = True
                         await self.mongo.set_config(guildid=message.guild.id, config=Config)
                         displaychannel = await self.fetch_channel(Config["announcements"]["displaychannel"])
-                        displaymessage = await displaychannel.fetch_message(
-                            Config["announcements"]["displaymessages"][str(section)])
-                        embed = CreateEmbed.ORBAT(section, Config)
+                        displaymessage = await displaychannel.fetch_message(Config["announcements"]["displaymessages"][str(section)])
+                        embed = CreateEmbed.ORBAT(section, Config, Orbat)
                         await displaymessage.edit(content=None, embed=embed)
             return found_user
-
-        Config = await self.mongo.get_config(guildid=message.guild.id)
 
         if message.id != Config["announcements"]["active"]:
             return
@@ -93,29 +91,30 @@ class Bot(discord.Client):
         await channel.send(content="", file=discord.File(Config['welcome message']['final file']))
 
     async def on_member_remove(self, user):
-        Config = await self.mongo.get_config(guildid=user.guild.id)
-        for Section in Config["ORBAT"]:
-            for x in range(len(Config["ORBAT"][Section])):
-                Role = Config["ORBAT"][Section][x]
+        Orbat = await self.mongo.get_orbats(guildid=user.guild.id)
+        for Section in Orbat:
+            for x in range(len(Orbat[Section]['Members'])):
+                Role = Orbat[Section]['Members'][x]
                 if Role["ID"] == user.id:
                     # Set New Section/Role
-                    Config["ORBAT"][Section][x]["Name"] = ""
-                    Config["ORBAT"][Section][x]["ID"] = None
-                    Config["ORBAT"][Section][x]["AttendingNextOp"] = None
+                    Orbat[Section]['Members'][x]["Name"] = ""
+                    Orbat[Section]['Members'][x]["ID"] = None
+                    Orbat[Section]['Members'][x]["AttendingNextOp"] = None
                     print(str(user.display_name) + " has left " + str(user.guild.name) + " while on the ORBAT.")
-                    await self.mongo.set_config(guildid=user.guild.id, config=Config)
+                    await self.mongo.set_orbats(guildid=user.guild.id, orbat=Orbat)
 
     async def on_message(self, message):
         if message.author.bot:
             return
 
         Config = await self.mongo.get_config(guildid=message.guild.id)
+        Orbats = await self.mongo.get_orbats(guildid=message.guild.id)
 
         if message.content.startswith(">help"):
             await message.author.send(content=None, embed=CreateEmbed.command_list(Config))
 
         await Administration.Main(self, message, Config)
-        await ORBAT.Main(self, message, Config)
+        await ORBAT.Main(self, message, Config, Orbats)
         await FunCommands.Main(self, message, Config)
 
 

@@ -41,25 +41,39 @@ async def Main(self, message, Config):
             except asyncio.TimeoutError:
                 Executions = await self.mongo.get_executions(message.guild.id)
                 try:
-                    current_executions = int(Executions[str(message.author.id)])
-                    Executions[str(message.author.id)] = current_executions + 1
+                    current_executions = int(Executions[str(message.mentions[0].id)])
+                    current_executions += 1
+                    Executions[str(message.mentions[0].id)] = current_executions
                 except KeyError:
-                    Executions[str(message.author.id)] = 1
+                    Executions[str(message.mentions[0].id)] = 1
                     current_executions = 1
                 await self.mongo.set_executions(message.guild.id, Executions)
                 await newmessage.delete()
-                await message.channel.send(str("***" + str(message.mentions[
+                if message.author.id == message.mentions[0].id:
+                    await message.channel.send(str("***" + str(message.mentions[
+                                                                   0].display_name) + " just killed themself! Avert your eyes from the vile heretic!***"))
+                else:
+                    await message.channel.send(str("***" + str(message.mentions[
                                                                0].display_name) + " was just executed by " + message.author.display_name + " in the name of The Emperor!***\n*This was offense #" + str(current_executions) + "*\nhttps://media.tenor.com/images/b08d0c2008c7a78134f50914e0ae965e/tenor.gif"))
+                await asyncio.sleep(1)
                 await message.delete()
                 await newmessage.delete()
 
             except InterruptedError:
                 await message.channel.send(str("***" + str(message.mentions[
                                                                0].display_name) + " was about to be executed by " + message.author.display_name + ", but gracefully dodged it just in time!***"))
+                await asyncio.sleep(1)
                 await message.delete()
                 await newmessage.delete()
             except TypeError:
                 await message.channel.send(str("***" + str(message.mentions[
                                                                0].display_name) + " was about to be executed by " + message.author.display_name + ", but was shoved out the way just in time!***"))
+                await asyncio.sleep(1)
+                await message.delete()
+                await newmessage.delete()
+            except RuntimeError:
+                await message.channel.send(str("***" + str(message.mentions[
+                                                               0].display_name) + " just committed suicide! Avert your eyes from this heretic!***"))
+                await asyncio.sleep(1)
                 await message.delete()
                 await newmessage.delete()

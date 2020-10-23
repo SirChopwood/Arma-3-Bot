@@ -9,6 +9,7 @@ class MongoDataBase:
         self.database = self.client['776thCadian']
         self.configs = self.database['Configs']
         self.executions = self.database['Executions']
+        self.orbats = self.database['ORBATs']
 
     def get_config_nosync(self, guildid):
         return self.configs.find_one({"guild_id": guildid})
@@ -28,25 +29,17 @@ class MongoDataBase:
     async def set_executions(self, guildid, executions):
         return self.executions.replace_one({"guild_id": guildid}, executions)
 
+    async def get_orbats(self, guildid):
+        orbat = self.orbats.find_one({"guild_id": guildid})
+        orbat.pop('_id')
+        orbat.pop('guild_id')
+        return orbat
 
-
-
-def OpenNoSync(guildid):
-
-    filepath = "../ConfigFiles/" + str(guildid) + ".json"
-    with open(filepath, "r") as file:
-        return json.load(file)
-
-
-async def Open(guildid):
-    filepath = "../ConfigFiles/" + str(guildid) + ".json"
-    with open(filepath, "r") as file:
-        return json.load(file)
-
-
-async def Save(data, guildid):
-    filepath = "../ConfigFiles/" + str(guildid) + ".json"
-    json.dump(data, open(filepath, "w"), indent=2, separators=(',', ': '))
+    async def set_orbats(self, guildid, orbat):
+        old_orbat = self.orbats.find_one({"guild_id": guildid})
+        orbat['_id'] = old_orbat['_id']
+        orbat['guild_id'] = old_orbat['guild_id']
+        return self.orbats.replace_one({"guild_id": guildid}, orbat)
 
 
 def Secret():

@@ -26,14 +26,16 @@ def command_list(Config):
 
 
 # RoleCall
-def ORBAT(section, Config):
-    if section not in Config["ORBAT"]:
+def ORBAT(section, Config, Orbats):
+    if section not in Orbats:
         return None
-    embed = discord.Embed(title=str(Config["guild_name"] + " - " + section), colour=852223)
+    colour = discord.colour.Colour(int("0x" + Orbats[section]['Colour'], 16))
+    embed = discord.Embed(title=section, colour=colour, description=str("*" + str(Config["guild_name"]) + "*"))
+    embed.set_thumbnail(url=Orbats[section]['EmblemURL'])
 
     checked_in = 0
     filled_slots = 0
-    for role in Config["ORBAT"][section]:
+    for role in Orbats[section]['Members']:
         if role["ID"]:
             filled_slots += 1
             if role["AttendingNextOp"] is None:
@@ -57,17 +59,17 @@ def ORBAT(section, Config):
     return embed
 
 
-def rolecall(Config):
+def rolecall(Config, Orbats):
     embed = discord.Embed(title=str(Config["guild_name"] + " Role Call"), colour=852223)
 
     total_filled_slots = 0
     total_checked_in = 0
-    for Section in Config["ORBAT"]:
+    for Section in Orbats:
         checked_in = 0
         filled_slots = 0
         attending = 0
         not_attending = 0
-        for role in Config["ORBAT"][Section]:
+        for role in Orbats[Section]['Members']:
             if role["ID"]:
                 filled_slots += 1
                 if role["AttendingNextOp"] is True:

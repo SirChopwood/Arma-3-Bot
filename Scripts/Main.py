@@ -58,7 +58,7 @@ class Bot(discord.Client):
                     if user.id == role["ID"]:
                         Orbat[section]['Members'][i]["AttendingNextOp"] = status
                         found_user = True
-                        await self.mongo.set_config(guildid=message.guild.id, config=Config)
+                        await self.mongo.set_orbats(guildid=message.guild.id, orbat=Orbat)
                         displaychannel = await self.fetch_channel(Config["announcements"]["displaychannel"])
                         displaymessage = await displaychannel.fetch_message(Config["announcements"]["displaymessages"][str(section)])
                         embed = CreateEmbed.ORBAT(section, Config, Orbat)

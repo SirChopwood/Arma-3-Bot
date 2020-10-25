@@ -1,2 +1,4 @@
-# Servo Skull 1137
- Servo Skull 1137
+# Requisitions Officer Bot
+Written in Python.
+Uses the DiscordPy & MongoDB Libraries.
+Maintained by Ramiris#5376

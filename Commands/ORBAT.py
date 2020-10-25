@@ -88,7 +88,6 @@ async def Main(self, message, Config, Orbats):
         async def set_ORBAT_user(message, user, section_text, role_text, Config, Orbats):
             for x in range(len(Orbats[section_text]['Members'])):
                 Role = Orbats[section_text]['Members'][x]
-                print(Role, role_text)
                 if role_text == Role["Role"] and Role["ID"] is None:
                     # Remove Old Section/Role
                     status = None

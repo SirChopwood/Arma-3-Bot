@@ -58,7 +58,7 @@ class DiscordBot(discord.Client):
         else:
             channel = ""
         tbs = "*" + type.__name__ + " exception handled in " + event + channel + " : " + str(
-            value) + "*\n\n```"
+            value) + "*\n\n```\n"
         for string in traceback.format_tb(tb):
             tbs = tbs + string
         tbs = tbs + "```"
@@ -88,4 +88,4 @@ class DiscordBot(discord.Client):
 if __name__ == '__main__':
     print("Bot Starting...")
     client = DiscordBot()
-    client.run("NzkyNTM4MTI1MTk2MTk3OTQw.X-fKpQ.QoHQX-zCf3Bk02_u8VzjQV8trMk")
+    client.run("NzkyNTM4MTI1MTk2MTk3OTQw.X-fKpQ.jVuWws1Xc6F9PM3lmKn8p6Eohzk")

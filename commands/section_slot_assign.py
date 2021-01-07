@@ -1,17 +1,36 @@
 import embedtemplates
 
 
+async def remove_old_position(self, message):
+    sections = self.database.get_all_sections(message.guild.id)
+    for section in sections:
+        for i in range(len(section["Structure"])):
+            if section["Structure"][i]["ID"] == message.mentions[0].id:
+                section["Structure"][i]["ID"] = 0
+                self.database.set_section(message.guild.id, section["Name"], section)
+                return True
+
+    return False
+
+
 async def set_user(self, message, sectionname, slotname):
+    removedrole = await remove_old_position(self, message)
+    status = False
+
     section = self.database.get_section(message.guild.id, sectionname)
     for i in range(len(section["Structure"])):
-        if section["Structure"][i]["Role"] == slotname:
+        if section["Structure"][i]["Role"] == slotname and section["Structure"][i]["ID"] == 0:
             section["Structure"][i]["ID"] = message.mentions[0].id
-    status = self.database.set_section(message.guild.id, sectionname, section)
-    if status:
+            status = self.database.set_section(message.guild.id, sectionname, section)
+
+    if status and removedrole:
+        await message.channel.send(content="", embed=embedtemplates.success("Slot Assignment", str(
+            "User " + str(message.mentions[0].display_name) + " has been removed from their old role and added to " + sectionname + "/" + slotname)))
+    elif status and not removedrole:
         await message.channel.send(content="", embed=embedtemplates.success("Slot Assignment", str(
             "User " + str(message.mentions[0].display_name) + " has been added to " + sectionname + "/" + slotname)))
     else:
-        await message.channel.send(content="", embed=embedtemplates.failure("Assignment Failed","Section or Role could not be found"))
+        await message.channel.send(content="", embed=embedtemplates.failure("Assignment Failed", "Section or Role could not be found"))
 
 
 async def Main(self, message, command, arguments):
@@ -27,7 +46,7 @@ async def Main(self, message, command, arguments):
         else:
             await set_user(self, message, arguments[0], arguments[1])
 
-    elif len(message.mentions) > 0:
+    elif len(message.mentions) > 0: # Questioned Responses
         await message.channel.send(content="", embed=embedtemplates.question("What Section should they be moved into?", message.author.display_name))
         section = await self.await_response(message.author)
         await message.channel.send(content="", embed=embedtemplates.question("What Slot should they be moved into?", message.author.display_name))

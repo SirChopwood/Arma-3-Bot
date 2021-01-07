@@ -8,14 +8,18 @@ async def Main(self, message, command, arguments):
         return
     arguments = arguments.split("|")
     if len(arguments) != 4:
-        await message.channel.send(content="", embed=embedtemplates.failure("Incorrect Argument Count", "Please provide the 4 Arguments (Section, Slot, Rank, Access) separated by a |"))
+        await message.channel.send(content="", embed=embedtemplates.failure("Incorrect Argument Count", "Please provide the 3 Arguments (Section, Slot Name, Section Admin Access (True = 1/False = 0)) separated by a |"))
         return
     section = self.database.get_section(message.guild.id, arguments[0])
     with open("json_files/section_slot_template.json", "r") as file:
         template = json.load(file)
     template["Role"] = str(arguments[1])
-    template["Rank"] = str(arguments[2])
-    template["Access"] = bool(arguments[3])
+    try:
+        template["Access"] = bool(int(arguments[2]))
+    except TypeError:
+        await message.channel.send(content="", embed=embedtemplates.failure("Incorrect Argument Count",
+                                                                            "Please provide the 3 Arguments (Section, Slot Name, Section Admin Access (True = 1/False = 0)) separated by a |"))
+        return
 
     section["Structure"].append(template)
     self.database.set_section(message.guild.id, arguments[0], section)

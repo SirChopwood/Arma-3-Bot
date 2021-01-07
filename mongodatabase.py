@@ -16,6 +16,11 @@ class Main:
         section = collection.find_one({"Type": "Section", "Name": section_name})
         return section
 
+    def get_all_sections(self, guild_id):
+        collection = self.get_guild_collection(guild_id)
+        sections = collection.find({"Type": "Section"})
+        return sections
+
     def add_section(self, guild_id, section_name):
         collection = self.get_guild_collection(guild_id)
         with open("json_files/section_template.json", "r") as file:
@@ -30,3 +35,21 @@ class Main:
             return True
         else:
             return False
+
+    def get_user(self, guild_id, user_id):
+        collection = self.get_guild_collection(guild_id)
+        user = collection.find_one({"Type": "User", "DiscordID": user_id})
+        return user
+
+    def add_user(self, guild_id, user):
+        collection = self.get_guild_collection(guild_id)
+        collection.insert_one(user)
+
+    def set_user(self, guild_id, user):
+        collection = self.get_guild_collection(guild_id)
+        collection.replace_one({"Type": "User", "DiscordID": user["DiscordID"]}, user)
+
+    def get_ranks(self, guild_id):
+        collection = self.get_guild_collection(guild_id)
+        ranks = collection.find_one({"Type": "Ranks"})
+        return ranks

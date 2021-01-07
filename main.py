@@ -40,6 +40,18 @@ class DiscordBot(discord.Client):
         user = await self.fetch_user(payload.user_id)
         emoji = payload.emoji
 
+        if user.bot or message.channel.type == discord.ChannelType.private or message.channel.type == discord.ChannelType.group:
+            return
+
+        for reaction_file in os.listdir("reactions"):
+            if reaction_file in ["__init__.py", "__pycache__"]:
+                continue
+            else:
+                spec = importlib.util.spec_from_file_location("module.name", str("reactions/" + reaction_file))
+                foo = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(foo)
+                await foo.Main(self, channel, message, user, emoji)
+
     async def on_member_join(self, user):
         print(user.display_name, " Has joined.")
 
@@ -66,8 +78,17 @@ class DiscordBot(discord.Client):
         await self.get_user(110838934644211712).send(tbs)
 
     async def on_message(self, message):
-        if message.author.bot:
+        if message.author.bot or message.channel.type == discord.ChannelType.private or message.channel.type == discord.ChannelType.group:
             return
+
+        for module_file in os.listdir("modules"):
+            if module_file in ["__init__.py", "__pycache__"]:
+                continue
+            else:
+                spec = importlib.util.spec_from_file_location("module.name", str("modules/" + module_file))
+                foo = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(foo)
+                await foo.Main(self, message)
 
         if message.content.startswith(">"):
             command_found = False
@@ -75,7 +96,9 @@ class DiscordBot(discord.Client):
             arguments = message.content[1:].replace(str(command+" "), "")
 
             for command_file in os.listdir("commands"):
-                if command_file[:-3] == command:
+                if command_file in ["__init__.py", "__pycache__"]:
+                    continue
+                elif command_file[:-3] == command:
                     spec = importlib.util.spec_from_file_location("module.name", str("commands/"+command_file))
                     foo = importlib.util.module_from_spec(spec)
                     spec.loader.exec_module(foo)
@@ -88,4 +111,6 @@ class DiscordBot(discord.Client):
 if __name__ == '__main__':
     print("Bot Starting...")
     client = DiscordBot()
-    client.run("NzkyNTM4MTI1MTk2MTk3OTQw.X-fKpQ.jVuWws1Xc6F9PM3lmKn8p6Eohzk")
+    with open("token.txt", "r") as file:
+        token = file.readlines()
+    client.run(token[0])

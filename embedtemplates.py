@@ -51,3 +51,11 @@ def profile(self, guild_id, author):
         else:
             embed.add_field(name=key, value=str(user[key]), inline=False)
     return embed
+
+
+def suggestion(text):
+    embed = discord.Embed(title="Suggestion:", colour=discord.Colour(0x6f00ff), description=text,
+                          timestamp=datetime.datetime.now())
+    embed.set_footer(text="Arma3Bot by Ramiris#5376",
+                     icon_url="https://cdn.discordapp.com/attachments/743445776491085855/795774307249946644/PFP2.png")
+    return embed

@@ -10,6 +10,8 @@ async def set_name(self, ranks, message, user_id):
     name = name.replace("$RS", str(ranks[user["Rank"]]["Short"]))  # Long Rank Name
     name = name.replace("$FN", str(user["FirstName"]))  # Short User Name
     name = name.replace("$LN", str(user["LastName"]))  # Long User Name
+    name = name.replace("$FI", str(user["FirstName"][0]))  # Short User Name Initial
+    name = name.replace("$LI", str(user["LastName"][0]))  # Long User Name Initial
     if "Nickname" in user:
         name = name.replace("$NN", str(user["Nickname"]))  # Nickname
 

@@ -53,3 +53,12 @@ class Main:
         collection = self.get_guild_collection(guild_id)
         ranks = collection.find_one({"Type": "Ranks"})
         return ranks
+
+    def get_settings(self, guild_id):
+        collection = self.get_guild_collection(guild_id)
+        settings = collection.find_one({"Type": "Settings"})
+        return settings
+
+    def set_settings(self, guild_id, settings):
+        collection = self.get_guild_collection(guild_id)
+        settings = collection.replace_one({"Type": "Settings"}, settings)

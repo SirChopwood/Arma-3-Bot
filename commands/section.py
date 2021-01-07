@@ -22,10 +22,14 @@ async def Main(self, message, command, arguments):
         ranks = self.database.get_ranks(message.guild.id)
 
         for role in section["Structure"]:
+            if role["Access"]:
+                name = str("**__" + str(role["Role"]) + "__**")
+            else:
+                name = str("**" + str(role["Role"]) + "**")
             if role["ID"] != 0:
                 user = self.get_user(role["ID"])
-                embed.add_field(name=str("**" + str(role["Role"]) + "**"), value=str("<:GreyTick:743466991981167138> " + user.display_name), inline=False)
+                embed.add_field(name=name, value=str("<:GreyTick:743466991981167138> " + user.display_name), inline=False)
             else:
-                embed.add_field(name=str("**" + str(role["Role"]) + "**"), value="*-Closed-*", inline=False)
+                embed.add_field(name=name, value="*-Closed-*", inline=False)
 
         await message.channel.send(content="", embed=embed)

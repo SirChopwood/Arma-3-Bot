@@ -47,9 +47,14 @@ async def Main(self, message, command, arguments):
             await set_user(self, message, arguments[0], arguments[1])
 
     elif len(message.mentions) > 0: # Questioned Responses
-        await message.channel.send(content="", embed=embedtemplates.question("What Section should they be moved into?", message.author.display_name))
+        messages = []
+        messages.append(message)
+        messages.append(await message.channel.send(content="", embed=embedtemplates.question("What Section should they be moved into?", message.author.display_name)))
         section = await self.await_response(message.author)
-        await message.channel.send(content="", embed=embedtemplates.question("What Slot should they be moved into?", message.author.display_name))
+        messages.append(section)
+        messages.append(await message.channel.send(content="", embed=embedtemplates.question("What Slot should they be moved into?", message.author.display_name)))
         slot = await self.await_response(message.author)
+        messages.append(slot)
         await set_user(self, message, section.content, slot.content)
-
+        for m in messages:
+            await m.delete()

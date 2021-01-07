@@ -7,6 +7,7 @@ import sys
 import traceback
 import asyncio
 import embedtemplates
+import datetime
 
 
 class DiscordBot(discord.Client):
@@ -53,7 +54,12 @@ class DiscordBot(discord.Client):
                 await foo.Main(self, channel, message, user, emoji)
 
     async def on_member_join(self, user):
-        print(user.display_name, " Has joined.")
+        embed = discord.Embed(title="Welcome!", colour=discord.Colour(0xff3333),
+                              description=str("Welcome to the server " + user.name + ". Please make sure you do >profile_register to gain access to the full server."),
+                              timestamp=datetime.datetime.now())
+        embed.set_footer(text="Arma3Bot by Ramiris#5376",
+                         icon_url="https://cdn.discordapp.com/attachments/743445776491085855/795774307249946644/PFP2.png")
+        await user.send(content="", embed=embed)
 
     async def on_member_remove(self, user):
         print(user.display_name, " Has left.")
@@ -110,7 +116,9 @@ class DiscordBot(discord.Client):
 
 if __name__ == '__main__':
     print("Bot Starting...")
-    client = DiscordBot()
+    intents = discord.Intents.default()
+    intents.members = True
+    client = DiscordBot(intents=intents)
     with open("token.txt", "r") as file:
         token = file.readlines()
     client.run(token[0])

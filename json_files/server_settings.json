@@ -1,5 +1,7 @@
 {
     "Type": "Settings",
     "SuggestionChannels": [],
-    "SuggestionHeaders": []
+    "SuggestionHeaders": [],
+    "LOAChannels": [],
+    "LOAHeaders": []
 }

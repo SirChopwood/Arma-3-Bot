@@ -48,7 +48,26 @@ def profile(self, guild_id, author):
     return embed
 
 
-def suggestion(text):
-    embed = discord.Embed(title="Suggestion:", colour=discord.Colour(0x6f00ff), description=text,
+def suggestion(text, name=""):
+    embed = discord.Embed(title="Suggestion: " + name, colour=discord.Colour(0xffbb00), description=text,
+                          timestamp=datetime.datetime.now())
+    return embed
+
+
+def loa(startdate, enddate, reason, user):
+    embed = discord.Embed(title="<:PurpleCross:796199276853723146> Leave of Absence: " + user.display_name, colour=discord.Colour(0x6f00ff),
+                          timestamp=datetime.datetime.now())
+    if startdate:
+        embed.add_field(name="Start", value=startdate, inline=True)
+    if enddate:
+        embed.add_field(name="End", value=enddate, inline=True)
+    if reason:
+        embed.add_field(name="Reason", value=reason, inline=False)
+    embed.set_thumbnail(url=user.avatar_url)
+    return embed
+
+
+def loa_header(text):
+    embed = discord.Embed(title="<:PurpleCross:796199276853723146> Leave of Absence", colour=discord.Colour(0x6f00ff), description=text,
                           timestamp=datetime.datetime.now())
     return embed

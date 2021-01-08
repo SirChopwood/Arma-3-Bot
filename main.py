@@ -8,13 +8,13 @@ import traceback
 import asyncio
 import embedtemplates
 import datetime
+import json
 
 
 class DiscordBot(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.database = mongodatabase.Main()
-
 
     async def await_response(self, user):
         def check(message):
@@ -26,14 +26,18 @@ class DiscordBot(discord.Client):
             return None
         return content
 
-
     async def on_ready(self):
         print('===| Logged In as {0.user} |==='.format(self))
         activity = discord.Activity(name='for hostiles!', type=discord.ActivityType.watching)
         await self.change_presence(activity=activity)
 
     async def on_guild_join(self, guild):
-        print("Joined Guild: " + guild.name)
+        with open("json_files/server_settings.json", "r") as file:
+            settingstemplate = json.load(file)
+        with open("json_files/server_ranks.json", "r") as file:
+            rankstemplate = json.load(file)
+        self.database.add_ranks(guild.id, rankstemplate)
+        self.database.add_settings(guild.id, settingstemplate)
 
     async def on_raw_reaction_add(self, payload):
         channel = await self.fetch_channel(payload.channel_id)
@@ -114,7 +118,7 @@ class DiscordBot(discord.Client):
                 await message.channel.send("Command not found!")
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # https://discord.com/oauth2/authorize?client_id=792538125196197940&scope=bot&permissions=8
     print("Bot Starting...")
     intents = discord.Intents.default()
     intents.members = True

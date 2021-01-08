@@ -7,7 +7,7 @@ async def Main(self, message, command, arguments):
         await message.channel.send(content="", embed=embedtemplates.help("Adds a member slot to a section on the ORBAT"))
         return
     arguments = arguments.split("|")
-    if len(arguments) != 4:
+    if len(arguments) != 3:
         await message.channel.send(content="", embed=embedtemplates.failure("Incorrect Argument Count", "Please provide the 3 Arguments (Section, Slot Name, Section Admin Access (True = 1/False = 0)) separated by a |"))
         return
     section = self.database.get_section(message.guild.id, arguments[0])

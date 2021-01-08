@@ -16,4 +16,4 @@ async def Main(self, message, command, arguments):
     section = self.database.get_section(message.guild.id, arguments[0])
     section["Colour"] = arguments[1]
     self.database.set_section(message.guild.id, arguments[0], section)
-    await message.channel.send(content="", embed=embedtemplates.success("Section Colour updated!"), )
+    await message.channel.send(content="", embed=embedtemplates.success("Section Colour updated!", str("Colour set to: " + section["Colour"])), )

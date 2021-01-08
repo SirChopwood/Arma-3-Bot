@@ -4,7 +4,7 @@ import embedtemplates
 async def Main(self, message, command, arguments):
     if arguments == 0 or arguments == "" or arguments == None or arguments == command:
         await message.channel.send(content="",
-                                   embed=embedtemplates.help("Sets the user's nickname, should only be used if needed. Will not be shown unless specific in their rank format."))
+                                   embed=embedtemplates.help("Sets the user's nickname, should only be used if needed. Will not be shown unless specified in their rank format."))
         return
 
     user = self.database.get_user(message.guild.id, message.author.id)

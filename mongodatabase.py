@@ -54,6 +54,14 @@ class Main:
         ranks = collection.find_one({"Type": "Ranks"})
         return ranks
 
+    def set_ranks(self, guild_id, ranks):
+        collection = self.get_guild_collection(guild_id)
+        collection.replace_one({"Type": "Ranks"}, ranks)
+
+    def add_ranks(self, guild_id, ranks):
+        collection = self.get_guild_collection(guild_id)
+        collection.insert_one(ranks)
+
     def get_settings(self, guild_id):
         collection = self.get_guild_collection(guild_id)
         settings = collection.find_one({"Type": "Settings"})
@@ -61,4 +69,8 @@ class Main:
 
     def set_settings(self, guild_id, settings):
         collection = self.get_guild_collection(guild_id)
-        settings = collection.replace_one({"Type": "Settings"}, settings)
+        collection.replace_one({"Type": "Settings"}, settings)
+
+    def add_settings(self, guild_id, settings):
+        collection = self.get_guild_collection(guild_id)
+        collection.insert_one(settings)

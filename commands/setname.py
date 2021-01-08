@@ -14,6 +14,10 @@ async def set_name(self, ranks, message, user_id):
     name = name.replace("$LI", str(user["LastName"][0]))  # Long User Name Initial
     if "Nickname" in user:
         name = name.replace("$NN", str(user["Nickname"]))  # Nickname
+    elif "$NN" in name:
+        await message.channel.send(content="", embed=embedtemplates.failure("Missing Nickname",
+                                                                            str("User needs to set a nickname first.")))
+        return
 
     try:
         discorduser = await message.guild.fetch_member(user_id)

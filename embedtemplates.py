@@ -34,6 +34,9 @@ def profile(self, guild_id, author):
     user = self.database.get_user(guild_id, author.id)
     ranks = self.database.get_ranks(guild_id)
 
+    if user == None:
+        return None
+
     for key in user:
         if key in ["_id", "Type"]:
             continue

@@ -1,0 +1,8 @@
+{
+    "Type": "Ranks",
+    "Dictionary": [{
+        "Long": "Default User",
+        "Short": "Hi",
+        "Format": "$FN $LN"
+    }]
+}

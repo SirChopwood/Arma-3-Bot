@@ -17,7 +17,7 @@ async def Main(self, message, command, arguments):
         await message.channel.send(content="", embed=embedtemplates.help(ranklist))
         return
     except ValueError:
-        await message.channel.send(content="", embed=embedtemplates.failure("Incorrect Argument Type", "Please state a single interger"))
+        await message.channel.send(content="", embed=embedtemplates.failure("Incorrect Argument Type", "Please state a single integer"))
         return
     except IndexError:
         await message.channel.send(content="", embed=embedtemplates.failure("Incorrect Argument Value", "Please state an existing ranks' value"))

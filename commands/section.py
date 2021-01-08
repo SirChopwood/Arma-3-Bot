@@ -15,8 +15,6 @@ async def Main(self, message, command, arguments):
     else:
         colour = discord.colour.Colour(int("0x" + section["Colour"], 16))
         embed = discord.Embed(title=section["Name"], colour=colour, timestamp=datetime.datetime.now())
-        embed.set_footer(text="Arma3Bot by Ramiris#5376",
-                         icon_url="https://cdn.discordapp.com/attachments/743445776491085855/795774307249946644/PFP2.png")
         embed.set_thumbnail(url=section["Logo"])
 
         ranks = self.database.get_ranks(message.guild.id)

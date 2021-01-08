@@ -3,6 +3,8 @@ import discord
 
 
 async def Main(self, channel, message, user, emoji):
+    if user.bot:
+        return
     settings = self.database.get_settings(message.guild.id)
     if channel.id in settings["LOAChannels"] and message.id in settings["LOAHeaders"]:
         await message.clear_reactions()

@@ -2,6 +2,8 @@ import embedtemplates
 
 
 async def Main(self, channel, message, user, emoji):
+    if user.bot:
+        return
     settings = self.database.get_settings(message.guild.id)
     if channel.id in settings["SuggestionChannels"] and message.id in settings["SuggestionHeaders"]:
         await message.clear_reactions()

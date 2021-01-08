@@ -71,3 +71,15 @@ def loa_header(text):
     embed = discord.Embed(title="<:PurpleCross:796199276853723146> Leave of Absence", colour=discord.Colour(0x6f00ff), description=text,
                           timestamp=datetime.datetime.now())
     return embed
+
+
+def announcement(opname, optime, opdate, opimage, ophost):
+    embed = discord.Embed(title=str("OPERATION: "+opname), colour=discord.Colour(0x0000ff),
+                          timestamp=datetime.datetime.now(), description=str("*Hosted by: "+ophost+"*"))
+    embed.add_field(name="Time/Date", value=str(optime + " " + opdate), inline=False)
+    embed.add_field(name="Reaction Key", value="<:GreenTick:743466991771451394> Attending\n"
+                                               "<:YellowTick:783840786999279619> Attending Late\n"
+                                               "<:BlueTick:783838821681987594> Might be Attending\n"
+                                               "<:RedTick:743466992144744468> Not Attending")
+    embed.set_image(url=opimage)
+    return embed

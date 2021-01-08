@@ -1,0 +1,17 @@
+{
+  "Type": "Announcement",
+  "PostDate": "",
+  "Operation": {
+    "Date": "",
+    "Time": "",
+    "Title": "",
+    "Image": "",
+    "Host": ""
+  },
+  "Results": {
+    "Attending": [],
+    "Late": [],
+    "No": [],
+    "LOA": []
+  }
+}

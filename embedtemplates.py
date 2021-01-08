@@ -56,7 +56,7 @@ def suggestion(text, name=""):
 
 def loa(startdate, enddate, reason, user):
     embed = discord.Embed(title="<:PurpleCross:796199276853723146> Leave of Absence: " + user.display_name, colour=discord.Colour(0x6f00ff),
-                          timestamp=datetime.datetime.now())
+                          timestamp=datetime.datetime.now(), description=user.id)
     if startdate:
         embed.add_field(name="Start", value=startdate, inline=True)
     if enddate:

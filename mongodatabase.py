@@ -87,7 +87,7 @@ class Main:
 
     def set_announcement(self, guild_id, announcement):
         collection = self.get_guild_collection(guild_id)
-        collection.replace_one({"Type": "Announcement"}, announcement)
+        collection.replace_one({"Type": "Announcement", "MessageID": announcement["MessageID"]}, announcement)
 
     def add_announcement(self, guild_id, announcement):
         collection = self.get_guild_collection(guild_id)

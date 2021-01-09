@@ -42,3 +42,4 @@ async def Main(self, message, command, arguments):
     await announcement.add_reaction("<:YellowTick:783840786999279619>")
     await announcement.add_reaction("<:BlueTick:783838821681987594>")
     await announcement.add_reaction("<:RedTick:743466992144744468>")
+    await message.delete()

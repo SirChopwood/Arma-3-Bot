@@ -74,3 +74,21 @@ class Main:
     def add_settings(self, guild_id, settings):
         collection = self.get_guild_collection(guild_id)
         collection.insert_one(settings)
+
+    def get_all_announcements(self, guild_id):
+        collection = self.get_guild_collection(guild_id)
+        announcements = collection.find({"Type": "Announcement"})
+        return announcements
+
+    def get_announcement(self, guild_id, announcement_id):
+        collection = self.get_guild_collection(guild_id)
+        announcement = collection.find_one({"Type": "Announcement", "MessageID": announcement_id})
+        return announcement
+
+    def set_announcement(self, guild_id, announcement):
+        collection = self.get_guild_collection(guild_id)
+        collection.replace_one({"Type": "Announcement"}, announcement)
+
+    def add_announcement(self, guild_id, announcement):
+        collection = self.get_guild_collection(guild_id)
+        collection.insert_one(announcement)

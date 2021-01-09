@@ -1,6 +1,7 @@
 {
   "Type": "Announcement",
   "PostDate": "",
+  "MessageID": 0,
   "Operation": {
     "Date": "",
     "Time": "",
@@ -8,10 +9,11 @@
     "Image": "",
     "Host": ""
   },
-  "Results": {
-    "Attending": [],
+  "Attendance": {
+    "Yes": [],
     "Late": [],
     "No": [],
-    "LOA": []
+    "LOA": [],
+    "Maybe": []
   }
 }

@@ -55,7 +55,7 @@ def suggestion(text, name=""):
 
 
 def loa(startdate, enddate, reason, user):
-    embed = discord.Embed(title="<:PurpleCross:796199276853723146> Leave of Absence: " + user.display_name, colour=discord.Colour(0x6f00ff),
+    embed = discord.Embed(title="<:PurpleTick:796199276853723146> Leave of Absence: " + user.display_name, colour=discord.Colour(0x6f00ff),
                           timestamp=datetime.datetime.now(), description=user.id)
     if startdate:
         embed.add_field(name="Start", value=startdate, inline=True)
@@ -68,14 +68,14 @@ def loa(startdate, enddate, reason, user):
 
 
 def loa_header(text):
-    embed = discord.Embed(title="<:PurpleCross:796199276853723146> Leave of Absence", colour=discord.Colour(0x6f00ff), description=text,
+    embed = discord.Embed(title="<:PurpleTick:796199276853723146> Leave of Absence", colour=discord.Colour(0x6f00ff), description=text,
                           timestamp=datetime.datetime.now())
     return embed
 
 
 def announcement(opname, optime, opdate, opimage, ophost):
     embed = discord.Embed(title=str("OPERATION: "+opname), colour=discord.Colour(0x0000ff),
-                          timestamp=datetime.datetime.now(), description=str("*Hosted by: "+ophost+"*"))
+                          description=str("*Hosted by: "+ophost+"*"))
     embed.add_field(name="Time/Date", value=str(optime + " " + opdate), inline=False)
     embed.add_field(name="Reaction Key", value="<:GreenTick:743466991771451394> Attending\n"
                                                "<:YellowTick:783840786999279619> Attending Late\n"

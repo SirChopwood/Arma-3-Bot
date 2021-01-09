@@ -9,6 +9,7 @@ import asyncio
 import embedtemplates
 import datetime
 import json
+import background_tasks
 
 
 class DiscordBot(discord.Client):
@@ -30,6 +31,7 @@ class DiscordBot(discord.Client):
         print('===| Logged In as {0.user} |==='.format(self))
         activity = discord.Activity(name='for hostiles!', type=discord.ActivityType.watching)
         await self.change_presence(activity=activity)
+        self.loop.create_task(await background_tasks.Main(self))
 
     async def on_guild_join(self, guild):
         with open("json_files/server_settings.json", "r") as file:
@@ -58,6 +60,8 @@ class DiscordBot(discord.Client):
                 await foo.Main(self, channel, message, user, emoji)
 
     async def on_member_join(self, user):
+        if user.bot:
+            return
         embed = discord.Embed(title="Welcome!", colour=discord.Colour(0xff3333),
                               description=str("Welcome to the server " + user.name + ". Please make sure you do >profile_register to gain access to the full server."),
                               timestamp=datetime.datetime.now())

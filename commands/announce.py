@@ -27,7 +27,17 @@ async def Main(self, message, command, arguments):
     else:
         template["Operation"]["Image"] = opimage.content
 
-    announcement = await message.channel.send(content="", embed=embedtemplates.announcement(template["Operation"]["Title"], template["Operation"]["Time"], template["Operation"]["Date"], template["Operation"]["Image"], template["Operation"]["Host"]))
+    announcement = await message.channel.send(content="",
+                                              embed=embedtemplates.announcement(template["Operation"]["Title"],
+                                                                                template["Operation"]["Time"],
+                                                                                template["Operation"]["Date"],
+                                                                                template["Operation"]["Image"],
+                                                                                template["Operation"]["Host"]))
+    template["MessageID"] = announcement.id
+    settings = self.database.get_settings(message.guild.id)
+    settings["ActiveAnnouncements"].append(announcement.id)
+    self.database.set_settings(message.guild.id, settings)
+    self.database.add_announcement(message.guild.id, template)
     await announcement.add_reaction("<:GreenTick:743466991771451394>")
     await announcement.add_reaction("<:YellowTick:783840786999279619>")
     await announcement.add_reaction("<:BlueTick:783838821681987594>")

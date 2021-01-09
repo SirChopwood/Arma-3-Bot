@@ -8,7 +8,7 @@ async def Main(self, channel, message, user, emoji):
     settings = self.database.get_settings(message.guild.id)
     if channel.id in settings["LOAChannels"] and message.id in settings["LOAHeaders"]:
         await message.clear_reactions()
-        await message.add_reaction("<:PurpleCross:796199276853723146>")
+        await message.add_reaction("<:PurpleTick:796199276853723146>")
         user2 = await channel.guild.fetch_member(user.id)
 
         await user.send(content="", embed=embedtemplates.question("When will your LOA start?", user.name))
@@ -24,7 +24,7 @@ async def Main(self, channel, message, user, emoji):
             await user.send(content="", embed=embedtemplates.success("LOA Posted", "Check the LOA Channel for Details"))
             loa = await channel.send(content="", embed=embedtemplates.loa(startdate=start.content, enddate=end.content,
                                                                           reason=reason.content, user=user2))
-            await loa.add_reaction("<:PurpleCross:796199276853723146>")
+            await loa.add_reaction("<:PurpleTick:796199276853723146>")
             profile = self.database.get_user(message.guild.id, user.id)
             profile["LOA"] = True
             self.database.set_user(message.guild.id, profile)

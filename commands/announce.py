@@ -1,5 +1,6 @@
 import embedtemplates
 import json
+import datetime
 
 
 async def Main(self, message, command, arguments):
@@ -34,6 +35,7 @@ async def Main(self, message, command, arguments):
                                                                                 template["Operation"]["Image"],
                                                                                 template["Operation"]["Host"]))
     template["MessageID"] = announcement.id
+    template["PostDate"] = datetime.datetime.now()
     settings = self.database.get_settings(message.guild.id)
     settings["ActiveAnnouncements"].append(announcement.id)
     self.database.set_settings(message.guild.id, settings)

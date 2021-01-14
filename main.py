@@ -17,6 +17,20 @@ class DiscordBot(discord.Client):
         super().__init__(*args, **kwargs)
         self.database = mongodatabase.Main()
 
+    async def run_file(self, filename, message="", arguments=""):
+        command_found = False
+        for command_file in os.listdir("commands"):
+            if command_file in ["__init__.py", "__pycache__"]:
+                continue
+            elif command_file[:-3] == filename:
+                spec = importlib.util.spec_from_file_location("module.name", str("commands/" + command_file))
+                foo = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(foo)
+                await foo.Main(self, message, filename, arguments)
+                command_found = True
+        if not command_found:
+            await message.channel.send("Command not found!")
+
     async def await_response(self, user):
         def check(message):
             return message.author == user
@@ -31,6 +45,7 @@ class DiscordBot(discord.Client):
         print('===| Logged In as {0.user} |==='.format(self))
         activity = discord.Activity(name='for hostiles!', type=discord.ActivityType.watching)
         await self.change_presence(activity=activity)
+
         self.loop.create_task(await background_tasks.Main(self))
 
     async def on_guild_join(self, guild):
@@ -105,21 +120,9 @@ class DiscordBot(discord.Client):
                 await foo.Main(self, message)
 
         if message.content.startswith(">"):
-            command_found = False
             command = message.content[1:].split(" ")[0]
             arguments = message.content[1:].replace(str(command+" "), "")
-
-            for command_file in os.listdir("commands"):
-                if command_file in ["__init__.py", "__pycache__"]:
-                    continue
-                elif command_file[:-3] == command:
-                    spec = importlib.util.spec_from_file_location("module.name", str("commands/"+command_file))
-                    foo = importlib.util.module_from_spec(spec)
-                    spec.loader.exec_module(foo)
-                    await foo.Main(self, message, command, arguments)
-                    command_found = True
-            if not command_found:
-                await message.channel.send("Command not found!")
+            await self.run_file(command, message, arguments)
 
 
 if __name__ == '__main__':  # https://discord.com/oauth2/authorize?client_id=792538125196197940&scope=bot&permissions=8

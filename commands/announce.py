@@ -34,6 +34,8 @@ async def Main(self, message, command, arguments):
                                                                                 template["Operation"]["Date"],
                                                                                 template["Operation"]["Image"],
                                                                                 template["Operation"]["Host"]))
+
+
     template["MessageID"] = announcement.id
     template["PostDate"] = datetime.datetime.now()
     settings = self.database.get_settings(message.guild.id)

@@ -15,5 +15,9 @@
     "No": [],
     "LOA": [],
     "Maybe": []
+  },
+  "Reminders": {
+    "24h": false,
+    "1h": false
   }
 }

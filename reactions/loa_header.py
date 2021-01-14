@@ -31,8 +31,8 @@ async def Main(self, channel, message, user, emoji):
             self.database.set_user(message.guild.id, profile)
 
             for announcement in self.database.get_all_announcements(message.guild.id):
-                now = datetime.datetime.now()
-                optime = datetime.datetime.strptime(str(announcement["Operation"]["Date"] + "/" + now.strftime("%Y") + " " + announcement["Operation"]["Time"]), '%d/%m/%Y %H:%M')
+                now = datetime.datetime.utcnow()
+                optime = datetime.datetime.strptime(str(announcement["Operation"]["Date"] + " " + announcement["Operation"]["Time"]), '%d/%m/%Y %H:%M')
                 if optime > now:
                     self.announcement_queue.put({"GuildID": message.guild.id, "AnnouncementID": announcement["MessageID"],
                                                  "UserID": user.id, "Status": "LOA"})

@@ -83,3 +83,20 @@ def announcement(opname, optime, opdate, opimage, ophost):
                                                "<:RedTick:743466992144744468> Not Attending")
     embed.set_image(url=opimage)
     return embed
+
+
+def announcement_compact(opname, optime, opdate, opimage, ophost):
+    embed = discord.Embed(title=str("OPERATION: "+opname), colour=discord.Colour(0x0000ff),
+                          description=str("*Hosted by: "+ophost+"*"))
+    embed.add_field(name="Time/Date", value=str(optime + " " + opdate), inline=False)
+    embed.set_image(url=opimage)
+    return embed
+
+
+def announcement_reminder(opname, optime, opdate, opimage, ophost):
+    embed = discord.Embed(title=str("OPERATION REMINDER: "+opname), colour=discord.Colour(0x0000ff),
+                          description=str("*Hosted by: "+ophost+"*"))
+    embed.add_field(name="Time/Date", value=str(optime + " " + opdate), inline=False)
+    embed.set_image(url=opimage)
+    embed.set_footer(text="Please react to the operation post.")
+    return embed

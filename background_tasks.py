@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import embedtemplates
 import queue
+import discord
 
 
 async def Main(self):
@@ -28,9 +29,11 @@ async def Main(self):
                     announcement["Operation"]["Date"] + " " + announcement["Operation"][
                         "Time"]), '%d/%m/%Y %H:%M')
 
-                if now == (optime - datetime.timedelta(minutes=2)) and announcement["Reminders"]["24h"] is False: # 24h
+                if now == (optime - datetime.timedelta(days=1)) and announcement["Reminders"]["24h"] is False: # 24h
                     for section in self.database.get_all_sections(guild.id):
                         for slot in section["Structure"]:
+                            if slot["ID"] == 0:
+                                continue
                             reacted = False
                             user = await self.fetch_user(slot["ID"])
                             for status in ["Yes", "No", "LOA", "Late", "Maybe"]:
@@ -40,8 +43,7 @@ async def Main(self):
                             if reacted:
                                 continue
                             else:
-                                print("AAAAAAAAAAA")
-                                if user.id == 110838934644211712:
+                                try:
                                     await user.send(content="",
                                                     embed=embedtemplates.announcement_reminder(
                                                         announcement["Operation"]["Title"],
@@ -49,19 +51,24 @@ async def Main(self):
                                                         announcement["Operation"]["Date"],
                                                         announcement["Operation"]["Image"],
                                                         announcement["Operation"]["Host"]))
+                                except discord.Forbidden:
+                                    print(user.name, "Could not be messaged.")
 
                     announcement["Reminders"]["24h"] = True
                     self.database.set_announcement(guild.id, announcement)
 
-                elif now == (optime - datetime.timedelta(minutes=1)) and announcement["Reminders"]["1h"] is False: # 1h
+                elif now == (optime - datetime.timedelta(hours=1)) and announcement["Reminders"]["1h"] is False: # 1h
                     for userid in announcement["Attendance"]["Maybe"]:
                         user = await self.fetch_user(userid)
-                        await user.send(content="",
+                        try:
+                            await user.send(content="",
                                         embed=embedtemplates.announcement_reminder(announcement["Operation"]["Title"],
                                                                                    announcement["Operation"]["Time"],
                                                                                    announcement["Operation"]["Date"],
                                                                                    announcement["Operation"]["Image"],
                                                                                    announcement["Operation"]["Host"]))
+                        except discord.Forbidden:
+                            print(user.name, "Could not be messaged.")
                     announcement["Reminders"]["1h"] = True
                     self.database.set_announcement(guild.id, announcement)
         await asyncio.sleep(0.2)

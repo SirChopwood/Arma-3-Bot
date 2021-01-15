@@ -28,7 +28,7 @@ async def set_user(self, message, sectionname, slotname):
         return
     removedrole = await remove_old_position(self, message)
     for i in range(len(section["Structure"])):
-        if section["Structure"][i]["Role"] == slotname and section["Structure"][i]["ID"] == 0:
+        if section["Structure"][i]["Role"] == slotname and section["Structure"][i]["ID"] == 0 and not status:
             section["Structure"][i]["ID"] = message.mentions[0].id
             status = self.database.set_section(message.guild.id, sectionname, section)
 

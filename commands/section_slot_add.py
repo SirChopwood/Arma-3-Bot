@@ -1,5 +1,6 @@
 import embedtemplates
 import json
+import permissions
 
 
 async def Main(self, message, command, arguments):
@@ -9,6 +10,10 @@ async def Main(self, message, command, arguments):
     arguments = arguments.split("|")
     if len(arguments) != 3:
         await message.channel.send(content="", embed=embedtemplates.failure("Incorrect Argument Count", "Please provide the 3 Arguments (Section, Slot Name, Section Admin Access (True = 1/False = 0)) separated by a |"))
+        return
+    if not await permissions.is_section_admin(self, message.guild.id, message.author.id, arguments[0]) and not await permissions.is_guild_admin(self, message.guild.id, message.author.id):
+        await message.channel.send(content="", embed=embedtemplates.failure("Permission Denied",
+                                                                            "User does not have permission to use this!"))
         return
     section = self.database.get_section(message.guild.id, arguments[0])
     with open("json_files/section_slot_template.json", "r") as file:

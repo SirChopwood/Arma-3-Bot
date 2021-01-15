@@ -1,8 +1,12 @@
-import os
 import embedtemplates
+import permissions
 
 
 async def Main(self, message, command, arguments):
+    if not await permissions.is_guild_admin(self, message.guild.id, message.author.id):
+        await message.channel.send(content="", embed=embedtemplates.failure("Permission Denied",
+                                                                            "User does not have permission to use this!"))
+        return
     if arguments == 0 or arguments == "" or arguments is None or arguments == command:
         await message.channel.send(content="", embed=embedtemplates.help(
             "Sets the targeted user's rank."))

@@ -1,5 +1,6 @@
 import embedtemplates
 import discord
+import permissions
 
 
 async def set_name(self, ranks, message, user_id):
@@ -33,6 +34,10 @@ async def Main(self, message, command, arguments):
     ranks = self.database.get_ranks(message.guild.id)
     ranks = ranks["Dictionary"]
     if len(message.mentions) > 0:
+        if not await permissions.is_guild_admin(self, message.guild.id, message.author.id):
+            await message.channel.send(content="", embed=embedtemplates.failure("Permission Denied",
+                                                                                "User does not have permission to use this!"))
+            return
         for member in message.mentions:
             await set_name(self, ranks, message, member.id)
         return

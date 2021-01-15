@@ -1,9 +1,14 @@
 import embedtemplates
 import json
 import datetime
+import permissions
 
 
 async def Main(self, message, command, arguments):
+    if not await permissions.is_guild_admin(self, message.guild.id, message.author.id):
+        await message.channel.send(content="", embed=embedtemplates.failure("Permission Denied",
+                                                                            "User does not have permission to use this!"))
+        return
 
     with open("json_files/announcement_template.json", "r") as file:
         template = json.load(file)

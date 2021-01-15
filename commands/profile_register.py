@@ -2,6 +2,11 @@ import embedtemplates
 import json
 
 async def Main(self, message, command, arguments):
+    test = self.database.get_user(message.guild.id, message.author.id)
+    if test is not None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Already Registered",
+                                                                            "You have already registered in this guild!"))
+        return
     messages = []
     with open("json_files/user_profile.json", "r") as file:
         template = json.load(file)

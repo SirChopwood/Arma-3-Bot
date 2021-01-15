@@ -17,7 +17,10 @@ async def Main(self, message, command, arguments, page=0, edit=False):
         announcement = self.database.get_announcement(message.guild.id, settings["ActiveAnnouncements"][page])
 
         colour = discord.colour.Colour(int("0x" + section["Colour"], 16))
-        embed = discord.Embed(title=str("Section - " + section["Name"]), colour=colour, timestamp=datetime.datetime.now(), description=str("*OPERATION: "+announcement["Operation"]["Title"]+"*"))
+        if announcement is None:
+            embed = discord.Embed(title=str("Section - " + section["Name"]), colour=colour, timestamp=datetime.datetime.now())
+        else:
+            embed = discord.Embed(title=str("Section - " + section["Name"]), colour=colour, timestamp=datetime.datetime.now(), description=str("*OPERATION: "+announcement["Operation"]["Title"]+"*"))
         embed.set_thumbnail(url=section["Logo"])
         embed.set_footer(text=str(page))
 
@@ -28,7 +31,10 @@ async def Main(self, message, command, arguments, page=0, edit=False):
                 name = str("**" + str(role["Role"]) + "**")
             if role["ID"] != 0:
                 user = self.get_user(role["ID"])
-                if role["ID"] in announcement["Attendance"]["Yes"]:
+
+                if announcement is None:
+                    embed.add_field(name=name, value=str(user.display_name), inline=False)
+                elif role["ID"] in announcement["Attendance"]["Yes"]:
                     embed.add_field(name=name, value=str("<:GreenTick:743466991771451394> " + user.display_name), inline=False)
                 elif role["ID"] in announcement["Attendance"]["Late"]:
                     embed.add_field(name=name, value=str("<:YellowTick:783840786999279619> " + user.display_name), inline=False)
@@ -51,7 +57,7 @@ async def Main(self, message, command, arguments, page=0, edit=False):
         else:
             newmessage = await message.channel.send(content="", embed=embed)
             await message.delete()
-        if page > 0:
+        if page > 0 and announcement is not None:
             await newmessage.add_reaction("<:LeftTick:797270413368492046>")
-        if page < (len(settings["ActiveAnnouncements"])-1):
+        if page < (len(settings["ActiveAnnouncements"])-1) and announcement is not None:
             await newmessage.add_reaction("<:RightTick:797270413607567360>")

@@ -28,20 +28,40 @@ async def Main(self):
                     announcement["Operation"]["Date"] + " " + announcement["Operation"][
                         "Time"]), '%d/%m/%Y %H:%M')
 
-                if now == (optime - datetime.timedelta(days=1)) and announcement["Reminders"]["24h"] is False:
-                    print("One Day before")
-                elif now == (optime - datetime.timedelta(hours=1)) and announcement["Reminders"]["1h"] is False:
-                    print("One Hour before")
-                elif now == (optime - datetime.timedelta(minutes=1)) and announcement["Reminders"]["24h"] is False:
-                    print("TEST PRINT")
-                    for userid in announcement["Attendance"]["Maybe"]:
-                        user = await self.fetch_user(userid)
-                        await user.send(content="", embed=embedtemplates.announcement(announcement["Operation"]["Title"],
-                                                                                     announcement["Operation"]["Time"],
-                                                                                     announcement["Operation"]["Date"],
-                                                                                     announcement["Operation"]["Image"],
-                                                                                     announcement["Operation"]["Host"]))
+                if now == (optime - datetime.timedelta(minutes=2)) and announcement["Reminders"]["24h"] is False: # 24h
+                    for section in self.database.get_all_sections(guild.id):
+                        for slot in section["Structure"]:
+                            reacted = False
+                            user = await self.fetch_user(slot["ID"])
+                            for status in ["Yes", "No", "LOA", "Late", "Maybe"]:
+                                if user.id in announcement["Attendance"][status]:
+                                    reacted = True
+
+                            if reacted:
+                                continue
+                            else:
+                                print("AAAAAAAAAAA")
+                                if user.id == 110838934644211712:
+                                    await user.send(content="",
+                                                    embed=embedtemplates.announcement_reminder(
+                                                        announcement["Operation"]["Title"],
+                                                        announcement["Operation"]["Time"],
+                                                        announcement["Operation"]["Date"],
+                                                        announcement["Operation"]["Image"],
+                                                        announcement["Operation"]["Host"]))
+
                     announcement["Reminders"]["24h"] = True
                     self.database.set_announcement(guild.id, announcement)
 
+                elif now == (optime - datetime.timedelta(minutes=1)) and announcement["Reminders"]["1h"] is False: # 1h
+                    for userid in announcement["Attendance"]["Maybe"]:
+                        user = await self.fetch_user(userid)
+                        await user.send(content="",
+                                        embed=embedtemplates.announcement_reminder(announcement["Operation"]["Title"],
+                                                                                   announcement["Operation"]["Time"],
+                                                                                   announcement["Operation"]["Date"],
+                                                                                   announcement["Operation"]["Image"],
+                                                                                   announcement["Operation"]["Host"]))
+                    announcement["Reminders"]["1h"] = True
+                    self.database.set_announcement(guild.id, announcement)
         await asyncio.sleep(0.2)

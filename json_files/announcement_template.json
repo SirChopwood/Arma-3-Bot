@@ -1,0 +1,23 @@
+{
+  "Type": "Announcement",
+  "PostDate": "",
+  "MessageID": 0,
+  "Operation": {
+    "Date": "",
+    "Time": "",
+    "Title": "",
+    "Image": "",
+    "Host": ""
+  },
+  "Attendance": {
+    "Yes": [],
+    "Late": [],
+    "No": [],
+    "LOA": [],
+    "Maybe": []
+  },
+  "Reminders": {
+    "24h": false,
+    "1h": false
+  }
+}

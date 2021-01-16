@@ -29,7 +29,7 @@ async def Main(self):
                     announcement["Operation"]["Date"] + " " + announcement["Operation"][
                         "Time"]), '%d/%m/%Y %H:%M')
 
-                if now == (optime - datetime.timedelta(days=1)) and announcement["Reminders"]["24h"] is False: # 24h
+                if now == (optime - datetime.timedelta(days=1)) and announcement["Reminders"]["24h"] is False:  # 24h
                     for section in self.database.get_all_sections(guild.id):
                         for slot in section["Structure"]:
                             if slot["ID"] == 0:
@@ -57,16 +57,17 @@ async def Main(self):
                     announcement["Reminders"]["24h"] = True
                     self.database.set_announcement(guild.id, announcement)
 
-                elif now == (optime - datetime.timedelta(hours=1)) and announcement["Reminders"]["1h"] is False: # 1h
+                elif now == (optime - datetime.timedelta(hours=1)) and announcement["Reminders"]["1h"] is False:  # 1h
                     for userid in announcement["Attendance"]["Maybe"]:
                         user = await self.fetch_user(userid)
                         try:
                             await user.send(content="",
-                                        embed=embedtemplates.announcement_reminder(announcement["Operation"]["Title"],
-                                                                                   announcement["Operation"]["Time"],
-                                                                                   announcement["Operation"]["Date"],
-                                                                                   announcement["Operation"]["Image"],
-                                                                                   announcement["Operation"]["Host"]))
+                                            embed=embedtemplates.announcement_reminder(
+                                                announcement["Operation"]["Title"],
+                                                announcement["Operation"]["Time"],
+                                                announcement["Operation"]["Date"],
+                                                announcement["Operation"]["Image"],
+                                                announcement["Operation"]["Host"]))
                         except discord.Forbidden:
                             print(user.name, "Could not be messaged.")
                     announcement["Reminders"]["1h"] = True

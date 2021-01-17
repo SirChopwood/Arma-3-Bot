@@ -37,20 +37,20 @@ async def Main(self, message, command, arguments):
     user["Rank"] = rank
     self.database.set_user(message.guild.id, user)
 
-    if ranks["Dictionary"][rank]["RoleID"] != 0:
-        role = message.guild.get_role(ranks["Dictionary"][rank]["RoleID"])
+    if ranks["Dictionary"][oldrank]["RoleID"] != 0:
+        role = message.guild.get_role(ranks["Dictionary"][oldrank]["RoleID"])
         try:
-            await message.mentions[0].add_roles(role)
+            await message.mentions[0].remove_roles(role)
         except discord.Forbidden:
             await message.channel.send(content="", embed=embedtemplates.failure("Missing Permissions",
                                                                                 str(
                                                                                     "I do not have permissions to set your roles, " + message.author.display_name)))
             return
 
-    if ranks["Dictionary"][oldrank]["RoleID"] != 0:
-        role = message.guild.get_role(ranks["Dictionary"][oldrank]["RoleID"])
+    if ranks["Dictionary"][rank]["RoleID"] != 0:
+        role = message.guild.get_role(ranks["Dictionary"][rank]["RoleID"])
         try:
-            await message.mentions[0].remove_roles(role)
+            await message.mentions[0].add_roles(role)
         except discord.Forbidden:
             await message.channel.send(content="", embed=embedtemplates.failure("Missing Permissions",
                                                                                 str(

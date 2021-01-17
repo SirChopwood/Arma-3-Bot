@@ -85,7 +85,12 @@ class DiscordBot(discord.Client):
         await user.send(content="", embed=embed)
 
     async def on_member_remove(self, user):
-        print(user.display_name, " Has left.")
+        sections = self.database.get_all_sections(user.guild.id)
+        for section in sections:
+            for i in range(len(section["Structure"])):
+                if section["Structure"][i]["ID"] == user.id:
+                    section["Structure"][i]["ID"] = 0
+                    self.database.set_section(user.guild.id, section["Name"], section)
 
     async def on_error(self, event, *args, **kwargs):
         type, value, tb = sys.exc_info()

@@ -14,13 +14,17 @@ async def Main(self, message, command, arguments, page=0, edit=False):
         return
     else:
         settings = self.database.get_settings(message.guild.id)
-        announcement = self.database.get_announcement(message.guild.id, settings["ActiveAnnouncements"][page])
-
         colour = discord.colour.Colour(int("0x" + section["Colour"], 16))
-        if announcement is None:
+        if len(settings["ActiveAnnouncements"]) == 0:
             embed = discord.Embed(title=str("Section - " + section["Name"]), colour=colour, timestamp=datetime.datetime.now())
+            announcement = None
         else:
-            embed = discord.Embed(title=str("Section - " + section["Name"]), colour=colour, timestamp=datetime.datetime.now(), description=str("*OPERATION: "+announcement["Operation"]["Title"]+"*"))
+            announcement = self.database.get_announcement(message.guild.id, settings["ActiveAnnouncements"][page])
+            if announcement is None:
+                embed = discord.Embed(title=str("Section - " + section["Name"]), colour=colour, timestamp=datetime.datetime.now())
+            else:
+                embed = discord.Embed(title=str("Section - " + section["Name"]), colour=colour, timestamp=datetime.datetime.now(), description=str("*OPERATION: "+announcement["Operation"]["Title"]+"*"))
+
         embed.set_thumbnail(url=section["Logo"])
         embed.set_footer(text=str(page))
 

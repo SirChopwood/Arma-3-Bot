@@ -1,5 +1,6 @@
 import embedtemplates
 import permissions
+import discord
 
 
 async def remove_old_position(self, message):
@@ -9,8 +10,16 @@ async def remove_old_position(self, message):
             if section["Structure"][i]["ID"] == message.mentions[0].id:
                 section["Structure"][i]["ID"] = 0
                 self.database.set_section(message.guild.id, section["Name"], section)
-                return True
 
+                if section["RoleID"] != 0:
+                    role = message.guild.get_role(section["RoleID"])
+                    try:
+                        await message.author.remove_roles(role)
+                    except discord.Forbidden:
+                        await message.channel.send(content="", embed=embedtemplates.failure("Missing Permissions",
+                                                                                            str(
+                                                                                                "I do not have permissions to set your roles, " + message.author.display_name)))
+                return True
     return False
 
 
@@ -28,9 +37,17 @@ async def set_user(self, message, sectionname, slotname):
         return
     removedrole = await remove_old_position(self, message)
     for i in range(len(section["Structure"])):
-        if section["Structure"][i]["Role"] == slotname and section["Structure"][i]["ID"] == 0:
+        if section["Structure"][i]["Role"] == slotname and section["Structure"][i]["ID"] == 0 and not status:
             section["Structure"][i]["ID"] = message.mentions[0].id
             status = self.database.set_section(message.guild.id, sectionname, section)
+            if section["RoleID"] != 0:
+                role = message.guild.get_role(section["RoleID"])
+                try:
+                    await message.author.add_roles(role)
+                except discord.Forbidden:
+                    await message.channel.send(content="", embed=embedtemplates.failure("Missing Permissions",
+                                                                                        str(
+                                                                                            "I do not have permissions to set your roles, " + message.author.display_name)))
 
     if status and removedrole:
         await message.channel.send(content="", embed=embedtemplates.success("Slot Assignment", str(

@@ -4,5 +4,7 @@
     "SuggestionHeaders": [],
     "LOAChannels": [],
     "LOAHeaders": [],
-    "ActiveAnnouncements": []
+    "ActiveAnnouncements": [],
+    "AdminRole": 0,
+    "RegisterRole": 0
 }

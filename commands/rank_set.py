@@ -1,6 +1,6 @@
 import embedtemplates
 import permissions
-
+import discord
 
 async def Main(self, message, command, arguments):
     if not await permissions.is_guild_admin(self, message.guild.id, message.author.id):
@@ -33,8 +33,30 @@ async def Main(self, message, command, arguments):
                                                                             "Please state an existing ranks' value"))
         return
     user = self.database.get_user(message.guild.id, message.mentions[0].id)
+    oldrank = user["Rank"]
     user["Rank"] = rank
     self.database.set_user(message.guild.id, user)
-    await message.channel.send(content="", embed=embedtemplates.success("Rank Set",str(str(message.mentions[0])+" has been set to rank "+str(rank))))
+
+    if ranks["Dictionary"][rank]["RoleID"] != 0:
+        role = message.guild.get_role(ranks["Dictionary"][rank]["RoleID"])
+        try:
+            await message.author.add_roles(role)
+        except discord.Forbidden:
+            await message.channel.send(content="", embed=embedtemplates.failure("Missing Permissions",
+                                                                                str(
+                                                                                    "I do not have permissions to set your roles, " + message.author.display_name)))
+            return
+
+    if ranks["Dictionary"][oldrank]["RoleID"] != 0:
+        role = message.guild.get_role(ranks["Dictionary"][oldrank]["RoleID"])
+        try:
+            await message.author.remove_roles(role)
+        except discord.Forbidden:
+            await message.channel.send(content="", embed=embedtemplates.failure("Missing Permissions",
+                                                                                str(
+                                                                                    "I do not have permissions to set your roles, " + message.author.display_name)))
+            return
+
+    await message.channel.send(content="", embed=embedtemplates.success("Rank Set", str(str(message.mentions[0])+" has been set to rank "+str(rank))))
     for m in messages:
         await m.delete()

@@ -28,7 +28,7 @@ async def Main(self, message, command, arguments):
     template["Short"] = str(shortname.content)
 
     messages.append(
-        await message.channel.send(content="", embed=embedtemplates.question("What is the Short Name of the new Rank?",
+        await message.channel.send(content="", embed=embedtemplates.question("What is the Format of the new Rank?",
                                                                              message.author.display_name)))
     formatting = await self.await_response(message.author)
     messages.append(formatting)

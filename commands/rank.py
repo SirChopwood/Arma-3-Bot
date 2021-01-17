@@ -12,7 +12,7 @@ async def Main(self, message, command, arguments):
         ranks = self.database.get_ranks(message.guild.id)
         ranklist = "```\n"
         for key in ranks["Dictionary"][rank]:
-            ranklist = str(ranklist + key + ": " + ranks["Dictionary"][rank][key] + "\n")
+            ranklist = str(ranklist + key + ": " + str(ranks["Dictionary"][rank][key]) + "\n")
         ranklist = ranklist + "```"
         await message.channel.send(content="", embed=embedtemplates.help(ranklist))
         return

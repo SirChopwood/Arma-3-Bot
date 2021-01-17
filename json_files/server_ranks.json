@@ -3,6 +3,7 @@
     "Dictionary": [{
         "Long": "Default User",
         "Short": "Hi",
-        "Format": "$FN $LN"
+        "Format": "$FN $LN",
+        "RoleID": 0
     }]
 }

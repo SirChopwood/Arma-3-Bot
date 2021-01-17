@@ -1,5 +1,6 @@
 import embedtemplates
 import json
+import discord
 
 async def Main(self, message, command, arguments):
     test = self.database.get_user(message.guild.id, message.author.id)
@@ -25,6 +26,16 @@ async def Main(self, message, command, arguments):
     messages.append(response)
 
     self.database.add_user(message.guild.id, template)
+    settings = self.database.get_settings(message.guild.id)
+    if settings["RegisterRole"] != 0:
+        role = message.guild.get_role(settings["RegisterRole"])
+        try:
+            await message.author.add_roles(role)
+        except discord.Forbidden:
+            await message.channel.send(content="", embed=embedtemplates.failure("Missing Permissions",
+                                                                                str(
+                                                                                    "I do not have permissions to set your roles, " + message.author.display_name)))
+            return
     await message.channel.send(content="", embed=embedtemplates.success("User Registered", str("Welcome " + message.author.mention)))
     embed = embedtemplates.profile(self, message.guild.id, message.author)
     await message.channel.send(content="", embed=embed)

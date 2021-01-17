@@ -36,9 +36,27 @@ class Main:
         else:
             return False
 
+    def remove_section(self, guild_id, section_name):
+        collection = self.get_guild_collection(guild_id)
+        status = collection.delete_one({"Type": "Section", "Name": section_name})
+        if status.deleted_count > 0:
+            return True
+        else:
+            return False
+
     def get_user(self, guild_id, user_id):
         collection = self.get_guild_collection(guild_id)
         user = collection.find_one({"Type": "User", "DiscordID": user_id})
+        return user
+
+    def get_users_of_rank(self, guild_id, rank):
+        collection = self.get_guild_collection(guild_id)
+        user = collection.find({"Type": "User", "Rank": int(rank)})
+        return user
+
+    def get_users_over_rank(self, guild_id, rank):
+        collection = self.get_guild_collection(guild_id)
+        user = collection.find({"Type": "User", "Rank": {"$gt": int(rank)}})
         return user
 
     def add_user(self, guild_id, user):

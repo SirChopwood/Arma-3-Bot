@@ -17,7 +17,7 @@ async def set_name(self, ranks, message, user_id):
         name = name.replace("$NN", str(user["Nickname"]))  # Nickname
     elif "$NN" in name:
         await message.channel.send(content="", embed=embedtemplates.failure("Missing Nickname",
-                                                                            str("User needs to set a nickname first.")))
+                                                                            str("User needs to set a nickname first, then retry with ``>setname``.")))
         return 0
 
     try:

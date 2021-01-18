@@ -18,11 +18,11 @@ async def Main(self, message, command, arguments):
     opname = await self.await_response(message.author)
     template["Operation"]["Title"] = opname.content
 
-    await message.author.send(content="", embed=embedtemplates.question("What is the date of the Operation? (DD/MM/YY)", message.author.display_name))
+    await message.author.send(content="", embed=embedtemplates.question("What is the date of the Operation? (DD/MM/YYYY)", message.author.display_name))
     opdate = await self.await_response(message.author)
     template["Operation"]["Date"] = opdate.content
 
-    await message.author.send(content="", embed=embedtemplates.question("What is the time of the Operation? (MM:HH)", message.author.display_name))
+    await message.author.send(content="", embed=embedtemplates.question("What is the time of the Operation? (HH:MM)", message.author.display_name))
     optime = await self.await_response(message.author)
     template["Operation"]["Time"] = optime.content
 

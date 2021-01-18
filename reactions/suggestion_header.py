@@ -21,12 +21,12 @@ async def Main(self, channel, message, user, emoji):
         await suggestion.add_reaction("<:GreenTick:743466991771451394>")
         await suggestion.add_reaction("<:RedTick:743466992144744468>")
     if channel.id in settings["SuggestionChannels"] and admin_access:
-        if str(emoji) == "<:YellowTick:783840786999279619>":
+        if str(emoji.name) == "YellowTick":
             embed = message.embeds[0]
             embed.colour = discord.Colour(0x00ff00)
             embed.title = "Suggestion - Accepted"
             await message.edit(content="", embed=embed)
-        elif str(emoji) == "<:PurpleTick:796199276853723146>":
+        elif str(emoji.name) == "PurpleTick":
             embed = message.embeds[0]
             embed.colour = discord.Colour(0xff0000)
             embed.title = "Suggestion - Declined"

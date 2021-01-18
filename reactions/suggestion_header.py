@@ -24,7 +24,7 @@ async def Main(self, channel, message, user, emoji):
         suggestion = await channel.send(content="", embed=embedtemplates.suggestion(response.content))
         await suggestion.add_reaction("<:GreenTick:743466991771451394>")
         await suggestion.add_reaction("<:RedTick:743466992144744468>")
-    if channel.id in settings["SuggestionChannels"] and admin_access:
+    if channel.id in settings["SuggestionChannels"] and admin_access and message.id not in settings["SuggestionHeaders"]:
         if str(emoji.name) == "YellowTick":
             embed = message.embeds[0]
             embed.colour = discord.Colour(0x00ff00)

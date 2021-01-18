@@ -47,8 +47,9 @@ async def Main(self, message, command, arguments):
             await message.channel.send(content="", embed=embedtemplates.failure("Permission Denied",
                                                                                 "User does not have permission to use this!"))
             return
-        for member in message.role_mentions.members:
-            status += await set_name(self, ranks, message, member.id)
+        for role_mention in message.role_mentions:
+            for member in role_mention.members:
+                status += await set_name(self, ranks, message, member.id)
 
     else:
         status = await set_name(self, ranks, message, message.author.id)

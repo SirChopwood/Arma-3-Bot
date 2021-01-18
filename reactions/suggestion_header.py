@@ -6,6 +6,10 @@ async def Main(self, channel, message, user, emoji):
     member = await channel.guild.fetch_member(user.id)
     settings = self.database.get_settings(message.guild.id)
     admin_access = False
+
+    if member.bot:
+        return
+
     for role in member.roles:
         if role.id == settings["AdminRole"]:
             admin_access = True

@@ -18,8 +18,11 @@ async def Main(self, channel, message, user, emoji):
         await member.send(content="", embed=embedtemplates.question("What is your suggestion?", member.name))
         response = await self.await_response(member)
         if response is None:
-            await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+            try:
+                await user.send(content="", embed=embedtemplates.failure("Response Timed Out",
                                                                                 "You took too long to respond!"))
+            except discord.Forbidden:
+                print(user.name, "Could not be messaged.")
             return
 
         suggestion = await channel.send(content="", embed=embedtemplates.suggestion(response.content))

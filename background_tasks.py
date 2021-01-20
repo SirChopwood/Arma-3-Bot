@@ -12,16 +12,12 @@ async def Main(self):
             data = self.announcement_queue.get(block=False)
             await self.wait_until_ready()
             announcement = self.database.get_announcement(data["GuildID"], data["AnnouncementID"])
-            removalpoint = None
             for status in ["Yes", "No", "LOA", "Late", "Maybe"]:
                 for i in range(len(announcement["Attendance"][status])):
-                    if announcement["Attendance"][status][i] == data["UserID"]:
-                        announcement["Attendance"][status].pop(i)
-                        removalpoint = [status, i]
-            if removalpoint:
-                print(removalpoint[0], removalpoint[1])
-                announcement["Attendance"][removalpoint[0]].pop(removalpoint[1])
-
+                    try:
+                        announcement["Attendance"][status].remove(data["UserID"])
+                    except ValueError:
+                        continue
             announcement["Attendance"][data["Status"]].append(data["UserID"])
             self.database.set_announcement(data["GuildID"], announcement)
         except queue.Empty:

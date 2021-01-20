@@ -16,18 +16,34 @@ async def Main(self, message, command, arguments):
 
     await message.author.send(content="", embed=embedtemplates.question("What is the name of the Operation?", message.author.display_name))
     opname = await self.await_response(message.author)
+    if opname is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     template["Operation"]["Title"] = opname.content
 
     await message.author.send(content="", embed=embedtemplates.question("What is the date of the Operation? (DD/MM/YY)", message.author.display_name))
     opdate = await self.await_response(message.author)
+    if opdate is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     template["Operation"]["Date"] = opdate.content
 
     await message.author.send(content="", embed=embedtemplates.question("What is the time of the Operation? (MM:HH)", message.author.display_name))
     optime = await self.await_response(message.author)
+    if optime is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     template["Operation"]["Time"] = optime.content
 
     await message.author.send(content="", embed=embedtemplates.question("Post an image or link to an image of the Operation.", message.author.display_name))
     opimage = await self.await_response(message.author)
+    if opimage is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     if opimage.attachments[0]:
         template["Operation"]["Image"] = opimage.attachments[0].url
     else:

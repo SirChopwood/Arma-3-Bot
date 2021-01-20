@@ -20,6 +20,10 @@ async def Main(self, message, command, arguments):
             "Please mention (ping) the role you want attached to this Section or type '0' for none.",
             message.author.display_name)))
     name = await self.await_response(message.author)
+    if name is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     messages.append(name)
     try:
         section["RoleID"] = int(name.role_mentions[0].id)

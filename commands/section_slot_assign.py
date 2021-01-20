@@ -69,9 +69,17 @@ async def Main(self, message, command, arguments):
         messages.append(message)
         messages.append(await message.channel.send(content="", embed=embedtemplates.question("What Section should they be moved into?", message.author.display_name)))
         section = await self.await_response(message.author)
+        if section is None:
+            await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                                "You took too long to respond!"))
+            return
         messages.append(section)
         messages.append(await message.channel.send(content="", embed=embedtemplates.question("What Slot should they be moved into?", message.author.display_name)))
         slot = await self.await_response(message.author)
+        if slot is None:
+            await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                                "You took too long to respond!"))
+            return
         messages.append(slot)
         await set_user(self, message, section.content, slot.content)
         for m in messages:

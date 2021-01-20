@@ -22,6 +22,10 @@ async def Main(self, message, command, arguments):
     messages.append(await message.channel.send(content="", embed=embedtemplates.question("What Rank ID should they be set to?", message.author.display_name)))
     try:
         rankmsg = await self.await_response(message.author)
+        if rankmsg is None:
+            await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                                "You took too long to respond!"))
+            return
         rank = int(rankmsg.content)
     except ValueError:
         await message.channel.send(content="", embed=embedtemplates.failure("Incorrect Argument Type", "Please state a single interger"))

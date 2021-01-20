@@ -14,12 +14,24 @@ async def Main(self, channel, message, user, emoji):
 
         await user.send(content="", embed=embedtemplates.question("When will your LOA start?", user.name))
         start = await self.await_response(user)
+        if start is None:
+            await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                                "You took too long to respond!"))
+            return
 
         await user.send(content="", embed=embedtemplates.question("When will your LOA end?", user.name))
         end = await self.await_response(user)
+        if end is None:
+            await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                                "You took too long to respond!"))
+            return
 
         await user.send(content="", embed=embedtemplates.question("What is the reason for your LOA?", user.name))
         reason = await self.await_response(user)
+        if reason is None:
+            await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                                "You took too long to respond!"))
+            return
 
         if start is not None and end is not None and reason is not None:
             await user.send(content="", embed=embedtemplates.success("LOA Posted", "Check the LOA Channel for Details"))

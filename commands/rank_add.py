@@ -24,6 +24,10 @@ async def Main(self, message, command, arguments):
         await message.channel.send(content="", embed=embedtemplates.question("What is the Short Name of the new Rank?",
                                                                              message.author.display_name)))
     shortname = await self.await_response(message.author)
+    if shortname is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     messages.append(shortname)
     template["Short"] = str(shortname.content)
 
@@ -31,6 +35,10 @@ async def Main(self, message, command, arguments):
         await message.channel.send(content="", embed=embedtemplates.question("What is the Format of the new Rank?",
                                                                              message.author.display_name)))
     formatting = await self.await_response(message.author)
+    if formatting is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     messages.append(formatting)
     template["Format"] = str(formatting.content)
 

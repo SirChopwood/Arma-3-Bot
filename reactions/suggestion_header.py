@@ -15,15 +15,21 @@ async def Main(self, channel, message, user, emoji):
             admin_access = True
 
     if channel.id in settings["SuggestionChannels"] and message.id in settings["SuggestionHeaders"]:
-        await message.clear_reactions()
-        await message.add_reaction("<:YellowTick:783840786999279619>")  # <:PurpleCross:796199276853723146>
-
         await member.send(content="", embed=embedtemplates.question("What is your suggestion?", member.name))
         response = await self.await_response(member)
+        if response is None:
+            await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                                "You took too long to respond!"))
+            return
 
         suggestion = await channel.send(content="", embed=embedtemplates.suggestion(response.content))
         await suggestion.add_reaction("<:GreenTick:743466991771451394>")
         await suggestion.add_reaction("<:RedTick:743466992144744468>")
+
+        newmessage = await message.channel.send(content="", embed=embedtemplates.suggestion("React to this post to make an anonymous suggestion!"))
+        await message.delete()
+        await newmessage.add_reaction("<:YellowTick:783840786999279619>")
+
     if channel.id in settings["SuggestionChannels"] and admin_access and message.id not in settings["SuggestionHeaders"]:
         if str(emoji.name) == "YellowTick":
             embed = message.embeds[0]

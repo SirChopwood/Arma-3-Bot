@@ -20,6 +20,10 @@ async def Main(self, message, command, arguments):
     messages.append(await message.channel.send(content="", embed=embedtemplates.question("What is the name of the new Slot?",
                                                                                          message.author.display_name)))
     role = await self.await_response(message.author)
+    if role is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     messages.append(role)
     template["Role"] = str(role.content)
 
@@ -27,6 +31,10 @@ async def Main(self, message, command, arguments):
         await message.channel.send(content="", embed=embedtemplates.question("Should this slot have admin access to the section? (True = 1/False = 0))",
                                                                              message.author.display_name)))
     admin = await self.await_response(message.author)
+    if admin is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     messages.append(admin)
     try:
         template["Access"] = bool(int(admin.content))

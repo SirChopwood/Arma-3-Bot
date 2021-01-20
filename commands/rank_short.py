@@ -25,6 +25,10 @@ async def Main(self, message, command, arguments):
         await message.channel.send(content="", embed=embedtemplates.question("What is the new Short Name of the Rank?",
                                                                              message.author.display_name)))
     name = await self.await_response(message.author)
+    if name is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     messages.append(name)
     rank["Short"] = name.content
 

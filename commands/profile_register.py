@@ -16,12 +16,20 @@ async def Main(self, message, command, arguments):
     messages.append(await message.channel.send(content="", embed=embedtemplates.question("What is your first name?",
                                                                          message.author.display_name)))
     response = await self.await_response(message.author)
+    if response is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     template["FirstName"] = response.content
     messages.append(response)
 
     messages.append(await message.channel.send(content="", embed=embedtemplates.question("What is your last name?",
                                                                                          message.author.display_name)))
     response = await self.await_response(message.author)
+    if response is None:
+        await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                            "You took too long to respond!"))
+        return
     template["LastName"] = response.content
     messages.append(response)
 

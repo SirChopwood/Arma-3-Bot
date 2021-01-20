@@ -25,6 +25,7 @@ async def Main(self):
 
         for guild in self.guilds:
             for announcement in self.database.get_all_announcements(guild.id):
+                settings = self.database.get_settings(guild.id)
                 now = datetime.datetime.utcnow().replace(second=0, microsecond=0)
                 optime = datetime.datetime.strptime(str(
                     announcement["Operation"]["Date"] + " " + announcement["Operation"][
@@ -73,4 +74,8 @@ async def Main(self):
                             print(user.name, "Could not be messaged.")
                     announcement["Reminders"]["1h"] = True
                     self.database.set_announcement(guild.id, announcement)
+
+                elif now >= optime and announcement["MessageID"] in settings["ActiveAnnouncements"]:
+                    settings["ActiveAnnouncements"].remove(announcement["MessageID"])
+                    self.database.set_settings(guild.id, settings)
         await asyncio.sleep(0.2)

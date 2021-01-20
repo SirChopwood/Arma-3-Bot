@@ -12,21 +12,30 @@ async def Main(self, channel, message, user, emoji):
         await message.add_reaction("<:PurpleTick:796199276853723146>")
         user2 = await channel.guild.fetch_member(user.id)
 
-        await user.send(content="", embed=embedtemplates.question("When will your LOA start?", user.name))
+        try:
+            await user.send(content="", embed=embedtemplates.question("When will your LOA start?", user.name))
+        except discord.Forbidden:
+            print(user.name, "Could not be messaged.")
         start = await self.await_response(user)
         if start is None:
             await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
                                                                                 "You took too long to respond!"))
             return
 
-        await user.send(content="", embed=embedtemplates.question("When will your LOA end?", user.name))
+        try:
+            await user.send(content="", embed=embedtemplates.question("When will your LOA end?", user.name))
+        except discord.Forbidden:
+            print(user.name, "Could not be messaged.")
         end = await self.await_response(user)
         if end is None:
             await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
                                                                                 "You took too long to respond!"))
             return
 
-        await user.send(content="", embed=embedtemplates.question("What is the reason for your LOA?", user.name))
+        try:
+            await user.send(content="", embed=embedtemplates.question("What is the reason for your LOA?", user.name))
+        except discord.Forbidden:
+            print(user.name, "Could not be messaged.")
         reason = await self.await_response(user)
         if reason is None:
             await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
@@ -34,7 +43,10 @@ async def Main(self, channel, message, user, emoji):
             return
 
         if start is not None and end is not None and reason is not None:
-            await user.send(content="", embed=embedtemplates.success("LOA Posted", "Check the LOA Channel for Details"))
+            try:
+                await user.send(content="", embed=embedtemplates.success("LOA Posted", "Check the LOA Channel for Details"))
+            except discord.Forbidden:
+                print(user.name, "Could not be messaged.")
             loa = await channel.send(content="", embed=embedtemplates.loa(startdate=start.content, enddate=end.content,
                                                                           reason=reason.content, user=user2))
             await loa.add_reaction("<:PurpleTick:796199276853723146>")

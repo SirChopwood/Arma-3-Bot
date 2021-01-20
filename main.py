@@ -37,7 +37,10 @@ class DiscordBot(discord.Client):
         try:
             content = await client.wait_for('message', check=check, timeout=100)
         except asyncio.TimeoutError:
-            user.send(content="", embed=embedtemplates.failure("Message Timeout", "Bot has timed out while awaiting a response."))
+            try:
+                user.send(content="", embed=embedtemplates.failure("Message Timeout", "Bot has timed out while awaiting a response."))
+            except discord.Forbidden:
+                print(user.name, "Could not be messaged.")
             return None
         return content
 
@@ -82,7 +85,10 @@ class DiscordBot(discord.Client):
                               timestamp=datetime.datetime.now())
         embed.set_footer(text="Arma3Bot by Ramiris#5376",
                          icon_url="https://cdn.discordapp.com/attachments/743445776491085855/795774307249946644/PFP2.png")
-        await user.send(content="", embed=embed)
+        try:
+            await user.send(content="", embed=embed)
+        except discord.Forbidden:
+            print(user.name, "Could not be messaged.")
 
     async def on_member_remove(self, user):
         sections = self.database.get_all_sections(user.guild.id)

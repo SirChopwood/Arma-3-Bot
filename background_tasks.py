@@ -14,6 +14,7 @@ async def Main(self):
             announcement = self.database.get_announcement(data["GuildID"], data["AnnouncementID"])
             for status in ["Yes", "No", "LOA", "Late", "Maybe"]:
                 announcementlistlen = len(announcement["Attendance"][status])
+                print(announcementlistlen, announcement["Attendance"])
                 for i in range(announcementlistlen):
                     if announcement["Attendance"][status][i] == data["UserID"]:
                         announcement["Attendance"][status].pop(i)

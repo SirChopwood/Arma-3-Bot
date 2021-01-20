@@ -13,9 +13,11 @@ async def Main(self):
             await self.wait_until_ready()
             announcement = self.database.get_announcement(data["GuildID"], data["AnnouncementID"])
             for status in ["Yes", "No", "LOA", "Late", "Maybe"]:
-                for i in range(len(announcement["Attendance"][status])):
+                announcementlistlen = len(announcement["Attendance"][status])
+                for i in range(announcementlistlen):
                     if announcement["Attendance"][status][i] == data["UserID"]:
                         announcement["Attendance"][status].pop(i)
+                        announcementlistlen -= 1
 
             announcement["Attendance"][data["Status"]].append(data["UserID"])
             self.database.set_announcement(data["GuildID"], announcement)

@@ -1,6 +1,7 @@
 import embedtemplates
 import permissions
 import discord
+import importlib.util
 
 async def Main(self, message, command, arguments):
     if not await permissions.is_guild_admin(self, message.guild.id, message.author.id):
@@ -62,5 +63,11 @@ async def Main(self, message, command, arguments):
             return
 
     await message.channel.send(content="", embed=embedtemplates.success("Rank Set", str(str(message.mentions[0])+" has been set to rank "+str(rank))))
+
+    spec = importlib.util.spec_from_file_location("module.name", str("commands/setname.py"))
+    foo = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(foo)
+    await foo.set_name(self, ranks["Dictionary"], message, message.mentions[0].id)
+
     for m in messages:
         await m.delete()

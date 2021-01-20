@@ -13,7 +13,7 @@ async def Main(self, message, command, arguments):
         template = json.load(file)
     template["DiscordID"] = message.author.id
 
-    messages.append(await message.channel.send(content="", embed=embedtemplates.question("What is your first name?",
+    messages.append(await message.channel.send(content="", embed=embedtemplates.question("What is your FIRST name? (Max 10 Characters)",
                                                                          message.author.display_name)))
     response = await self.await_response(message.author)
     if response is None:
@@ -23,7 +23,7 @@ async def Main(self, message, command, arguments):
     template["FirstName"] = response.content
     messages.append(response)
 
-    messages.append(await message.channel.send(content="", embed=embedtemplates.question("What is your last name?",
+    messages.append(await message.channel.send(content="", embed=embedtemplates.question("What is your LAST name? (Max 10 Characters)",
                                                                                          message.author.display_name)))
     response = await self.await_response(message.author)
     if response is None:

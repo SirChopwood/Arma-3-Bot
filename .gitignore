@@ -128,3 +128,4 @@ dmypy.json
 Thumbs.db
 Scripts/Secrets.json
 /ConfigFiles/
+token.txt

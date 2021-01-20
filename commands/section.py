@@ -34,7 +34,7 @@ async def Main(self, message, command, arguments, page=0, edit=False):
             else:
                 name = str("**" + str(role["Role"]) + "**")
             if role["ID"] != 0:
-                user = self.get_user(role["ID"])
+                user = message.guild.get_member(role["ID"])
 
                 if announcement is None:
                     embed.add_field(name=name, value=str(user.display_name), inline=False)

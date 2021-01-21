@@ -4,7 +4,9 @@ import json
 
 class Main:
     def __init__(self):
-        self.client = pymongo.MongoClient("mongodb://ReqBotMason:11374265@164.132.200.68:8100/?authSource=admin")
+        with open("token.txt", "r") as file:
+            token = file.readlines()
+        self.client = pymongo.MongoClient(token)
         self.bot_database = self.client['arma3bot']
 
     def get_guild_collection(self, guild_id):

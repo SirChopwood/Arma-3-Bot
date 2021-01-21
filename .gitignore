@@ -129,3 +129,4 @@ Thumbs.db
 Scripts/Secrets.json
 /ConfigFiles/
 token.txt
+/mongo.txt

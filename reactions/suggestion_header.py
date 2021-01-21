@@ -30,6 +30,9 @@ async def Main(self, channel, message, user, emoji):
         await suggestion.add_reaction("<:RedTick:743466992144744468>")
 
         newmessage = await message.channel.send(content="", embed=embedtemplates.suggestion("React to this post to make an anonymous suggestion!"))
+        settings["SuggestionHeaders"].remove(message.id)
+        settings["SuggestionHeaders"].append(newmessage.id)
+        self.database.set_settings(message.guild.id, settings)
         await message.delete()
         await newmessage.add_reaction("<:YellowTick:783840786999279619>")
 

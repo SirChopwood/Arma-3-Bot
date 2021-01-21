@@ -4,7 +4,7 @@ import json
 
 class Main:
     def __init__(self):
-        with open("token.txt", "r") as file:
+        with open("mongo.txt", "r") as file:
             token = file.readlines()
         self.client = pymongo.MongoClient(token)
         self.bot_database = self.client['arma3bot']

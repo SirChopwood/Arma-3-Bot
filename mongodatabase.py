@@ -108,6 +108,10 @@ class Main:
     def remove_announcement(self, guild_id, announcement_id):
         collection = self.get_guild_collection(guild_id)
         announcement = collection.delete_one({"Type": "Announcement", "MessageID": announcement_id})
+        settings = self.get_settings(guild_id)
+        if announcement_id in settings["ActiveAnnouncements"]:
+            settings["ActiveAnnouncements"].remove(announcement_id)
+            self.set_settings(guild_id, settings)
         if announcement.deleted_count > 0:
             return True
         else:

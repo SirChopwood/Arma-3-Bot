@@ -17,7 +17,7 @@ async def Main(self, channel, message, user, emoji):
             if permissions.is_guild_admin(message.guild.id, user.id):
                 if self.database.remove_announcement(message.guild.id, message.id):
                     await message.delete()
-                    return
+            return
         else:
             return
         self.announcement_queue.put({"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user.id, "Status":status})

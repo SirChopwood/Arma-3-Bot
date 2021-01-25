@@ -2,6 +2,7 @@ import embedtemplates
 import json
 import datetime
 import permissions
+import dateutil
 
 
 async def Main(self, message, command, arguments):
@@ -22,7 +23,7 @@ async def Main(self, message, command, arguments):
         return
     template["Operation"]["Title"] = opname.content
 
-    await message.author.send(content="", embed=embedtemplates.question("What is the date of the Operation? (DD/MM/YYYY)", message.author.display_name))
+    await message.author.send(content="", embed=embedtemplates.question("What is the date of the Operation (UTC)? (DD/MM/YYYY)", message.author.display_name))
     opdate = await self.await_response(message.author)
     if opdate is None:
         await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
@@ -30,7 +31,7 @@ async def Main(self, message, command, arguments):
         return
     template["Operation"]["Date"] = opdate.content
 
-    await message.author.send(content="", embed=embedtemplates.question("What is the time of the Operation? (HH:MM)", message.author.display_name))
+    await message.author.send(content="", embed=embedtemplates.question("What is the time of the Operation (UTC)? (HH:MM)", message.author.display_name))
     optime = await self.await_response(message.author)
     if optime is None:
         await message.channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
@@ -49,12 +50,23 @@ async def Main(self, message, command, arguments):
     else:
         template["Operation"]["Image"] = opimage.content
 
+    #dateutil.parser.parse(str(opdate.content))
+
+    try:
+        datetime.datetime.strptime(str(template["Operation"]["Date"] + " " + template["Operation"][
+            "Time"]), '%d/%m/%Y %H:%M')
+    except ValueError:
+        await message.channel.send(content="", embed=embedtemplates.failure("Invalid Arguments",
+                                                                            "Your date or time does not match the specified format!"))
+        return
+
     announcement = await message.channel.send(content="",
                                               embed=embedtemplates.announcement(template["Operation"]["Title"],
                                                                                 template["Operation"]["Time"],
                                                                                 template["Operation"]["Date"],
                                                                                 template["Operation"]["Image"],
                                                                                 template["Operation"]["Host"]))
+
 
 
     template["MessageID"] = announcement.id

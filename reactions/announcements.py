@@ -1,3 +1,5 @@
+import permissions
+
 async def Main(self, channel, message, user, emoji):
     if user.bot:
         return
@@ -11,6 +13,11 @@ async def Main(self, channel, message, user, emoji):
             status = "Maybe"
         elif str(emoji) == "<:RedTick:743466992144744468>":
             status = "No"
+        elif str(emoji) == "<:PurpleTick:796199276853723146>":
+            if permissions.is_guild_admin(message.guild.id, user.id):
+                if self.database.remove_announcement(message.guild.id, message.id):
+                    await message.delete()
+                    return
         else:
             return
         self.announcement_queue.put({"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user.id, "Status":status})

@@ -105,6 +105,14 @@ class Main:
         announcement = collection.find_one({"Type": "Announcement", "MessageID": announcement_id})
         return announcement
 
+    def remove_announcement(self, guild_id, announcement_id):
+        collection = self.get_guild_collection(guild_id)
+        announcement = collection.delete_one({"Type": "Announcement", "MessageID": announcement_id})
+        if announcement.deleted_count > 0:
+            return True
+        else:
+            return False
+
     def set_announcement(self, guild_id, announcement):
         collection = self.get_guild_collection(guild_id)
         collection.replace_one({"Type": "Announcement", "MessageID": announcement["MessageID"]}, announcement)

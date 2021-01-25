@@ -2,7 +2,7 @@ import embedtemplates
 import json
 import datetime
 import permissions
-import dateutil
+import discord
 
 
 async def Main(self, message, command, arguments):
@@ -50,8 +50,6 @@ async def Main(self, message, command, arguments):
     else:
         template["Operation"]["Image"] = opimage.content
 
-    #dateutil.parser.parse(str(opdate.content))
-
     try:
         datetime.datetime.strptime(str(template["Operation"]["Date"] + " " + template["Operation"][
             "Time"]), '%d/%m/%Y %H:%M')
@@ -79,4 +77,15 @@ async def Main(self, message, command, arguments):
     await announcement.add_reaction("<:YellowTick:783840786999279619>")
     await announcement.add_reaction("<:BlueTick:783838821681987594>")
     await announcement.add_reaction("<:RedTick:743466992144744468>")
+
+    for user in self.database.get_all_users(message.guild.id):
+        if user["LOA"]:
+            self.announcement_queue.put({"GuildID": message.guild.id, "AnnouncementID": announcement.id,
+                                         "UserID": user.id, "Status": "LOA"})
+
+    try:
+        await message.author.send(content="", embed=embedtemplates.success("Announcement Posted", "Announcement has been posted into the channel and is now being tracked for attendance."))
+    except discord.Forbidden:
+        print(message.author.name, "Could not be messaged.")
     await message.delete()
+

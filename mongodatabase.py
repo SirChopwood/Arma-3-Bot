@@ -51,15 +51,20 @@ class Main:
         user = collection.find_one({"Type": "User", "DiscordID": user_id})
         return user
 
+    def get_all_users(self, guild_id):
+        collection = self.get_guild_collection(guild_id)
+        users = collection.find({"Type": "User"})
+        return users
+
     def get_users_of_rank(self, guild_id, rank):
         collection = self.get_guild_collection(guild_id)
-        user = collection.find({"Type": "User", "Rank": int(rank)})
-        return user
+        users = collection.find({"Type": "User", "Rank": int(rank)})
+        return users
 
     def get_users_over_rank(self, guild_id, rank):
         collection = self.get_guild_collection(guild_id)
-        user = collection.find({"Type": "User", "Rank": {"$gt": int(rank)}})
-        return user
+        users = collection.find({"Type": "User", "Rank": {"$gt": int(rank)}})
+        return users
 
     def add_user(self, guild_id, user):
         collection = self.get_guild_collection(guild_id)

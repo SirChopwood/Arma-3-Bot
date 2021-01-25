@@ -13,8 +13,8 @@ async def Main(self, channel, message, user, emoji):
             status = "Maybe"
         elif str(emoji) == "<:RedTick:743466992144744468>":
             status = "No"
-        elif str(emoji) == "<:PurpleTick:796199276853723146>":
-            if permissions.is_guild_admin(self, message.guild.id, user.id):
+        elif "PurpleTick" in str(emoji):
+            if await permissions.is_guild_admin(self, message.guild.id, user.id):
                 if self.database.remove_announcement(message.guild.id, message.id):
                     await message.delete()
             return

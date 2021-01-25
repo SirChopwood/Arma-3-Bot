@@ -81,7 +81,7 @@ async def Main(self, message, command, arguments):
     for user in self.database.get_all_users(message.guild.id):
         if user["LOA"]:
             self.announcement_queue.put({"GuildID": message.guild.id, "AnnouncementID": announcement.id,
-                                         "UserID": user.id, "Status": "LOA"})
+                                         "UserID": user["DiscordID"], "Status": "LOA"})
 
     try:
         await message.author.send(content="", embed=embedtemplates.success("Announcement Posted", "Announcement has been posted into the channel and is now being tracked for attendance."))

@@ -18,6 +18,31 @@ async def Main(self, channel, message, user, emoji):
                 if self.database.remove_announcement(message.guild.id, message.id):
                     await message.delete()
             return
+        elif "YellowTick" in str(emoji):
+            if await permissions.is_guild_admin(self, message.guild.id, user.id):
+                for reaction in message.reactions:
+                    users = await reaction.users().flatten()
+                    if str(reaction.emoji) == "<:GreenTick:743466991771451394>":
+                        async for user2 in users:
+                            self.announcement_queue.put(
+                                {"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user2.id,
+                                 "Status": "Yes"})
+                    elif str(reaction.emoji) == "<:YellowTick:783840786999279619>":
+                        async for user2 in users:
+                            self.announcement_queue.put(
+                            {"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user.id,
+                             "Status": "Late"})
+                    elif str(reaction.emoji) == "<:BlueTick:783838821681987594>":
+                        async for user2 in users:
+                            self.announcement_queue.put(
+                            {"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user.id,
+                             "Status": "Maybe"})
+                    elif str(reaction.emoji) == "<:RedTick:743466992144744468>":
+                        async for user2 in users:
+                            self.announcement_queue.put(
+                            {"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user.id,
+                             "Status": "No"})
+
         else:
             return
         self.announcement_queue.put({"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user.id, "Status":status})

@@ -30,17 +30,17 @@ async def Main(self, channel, message, user, emoji):
                     elif str(reaction.emoji) == "<:YellowTick:783840786999279619>":
                         async for user2 in users:
                             self.announcement_queue.put(
-                            {"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user.id,
+                            {"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user2.id,
                              "Status": "Late"})
                     elif str(reaction.emoji) == "<:BlueTick:783838821681987594>":
                         async for user2 in users:
                             self.announcement_queue.put(
-                            {"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user.id,
+                            {"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user2.id,
                              "Status": "Maybe"})
                     elif str(reaction.emoji) == "<:RedTick:743466992144744468>":
                         async for user2 in users:
                             self.announcement_queue.put(
-                            {"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user.id,
+                            {"GuildID": message.guild.id, "AnnouncementID": message.id, "UserID": user2.id,
                              "Status": "No"})
 
         else:

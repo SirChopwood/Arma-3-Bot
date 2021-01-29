@@ -37,10 +37,6 @@ class DiscordBot(discord.Client):
         try:
             content = await client.wait_for('message', check=check, timeout=100)
         except asyncio.TimeoutError:
-            try:
-                user.send(content="", embed=embedtemplates.failure("Message Timeout", "Bot has timed out while awaiting a response."))
-            except discord.Forbidden:
-                print(user.name, "Could not be messaged.")
             return None
         return content
 

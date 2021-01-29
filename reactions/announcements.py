@@ -18,7 +18,7 @@ async def Main(self, channel, message, user, emoji):
                 if self.database.remove_announcement(message.guild.id, message.id):
                     await message.delete()
             return
-        elif "YellowTick" in str(emoji):
+        elif "RightTick" in str(emoji):
             if await permissions.is_guild_admin(self, message.guild.id, user.id):
                 for reaction in message.reactions:
                     users = await reaction.users().flatten()

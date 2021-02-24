@@ -128,5 +128,5 @@ dmypy.json
 Thumbs.db
 Scripts/Secrets.json
 /ConfigFiles/
-token.txt
+token*.txt
 /mongo.txt

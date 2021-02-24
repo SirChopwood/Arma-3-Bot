@@ -9,8 +9,9 @@ async def Main(self, message, command, arguments):
                                                                             "User does not have permission to use this!"))
         return
     settings = self.database.get_settings(message.guild.id)
-    settings["SuggestionChannels"].append(message.channel.id)
-    self.database.set_settings(message.guild.id, settings)
+    if message.channel.id not in settings["SuggestionChannels"]:
+        settings["SuggestionChannels"].append(message.channel.id)
+        self.database.set_settings(message.guild.id, settings)
 
     spec = importlib.util.spec_from_file_location("module.name", str("commands/suggestion_header.py"))
     foo = importlib.util.module_from_spec(spec)

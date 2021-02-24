@@ -26,6 +26,13 @@ async def Main(self):
         for guild in self.guilds:
             for announcement in self.database.get_all_announcements(guild.id):
                 settings = self.database.get_settings(guild.id)
+
+                try:
+                    if not settings["OpReminders"]:
+                        continue
+                except KeyError:
+                    continue
+
                 now = datetime.datetime.utcnow().replace(second=0, microsecond=0)
                 optime = datetime.datetime.strptime(str(
                     announcement["Operation"]["Date"] + " " + announcement["Operation"][

@@ -100,3 +100,21 @@ def announcement_reminder(opname, optime, opdate, opimage, ophost):
     embed.set_image(url=opimage)
     embed.set_footer(text="Please react to the operation post.")
     return embed
+
+
+def application(user, appid, questions, answers):
+    embed = discord.Embed(title="Application: " + user.display_name, colour=discord.Colour(0xff8800),
+                          description=str(str(appid)+" | "+str(user.id)), timestamp=datetime.datetime.now())
+    embed.set_thumbnail(url=user.avatar_url)
+    for i in range(len(questions)):
+        embed.add_field(name=questions[i], value=answers[i], inline=False)
+    return embed
+
+
+def application_header(title, questions=[]):
+    embed = discord.Embed(title=title, colour=discord.Colour(0xff8800))
+    questioncount = 0
+    for question in questions:
+        questioncount += 1
+        embed.add_field(name=str("Question " + str(questioncount)), value=question, inline=False)
+    return embed

@@ -129,3 +129,22 @@ class Main:
     def add_announcement(self, guild_id, announcement):
         collection = self.get_guild_collection(guild_id)
         collection.insert_one(announcement)
+
+    def get_application(self, guild_id, application_id):
+        collection = self.get_guild_collection(guild_id)
+        application = collection.find_one({"Type": "Application", "MessageID": application_id})
+        return application
+
+    def add_application_result(self, guild_id, application_id, results):
+        collection = self.get_guild_collection(guild_id)
+        application = self.get_application(guild_id, application_id)
+        application["Results"].append(results)
+        collection.replace_one({"Type": "Application", "MessageID": application_id}, application)
+
+    def add_application(self, guild_id, application):
+        collection = self.get_guild_collection(guild_id)
+        collection.insert_one(application)
+
+    def set_application(self, guild_id, application):
+        collection = self.get_guild_collection(guild_id)
+        collection.replace_one({"Type": "Application", "MessageID": application["MessageID"]}, application)

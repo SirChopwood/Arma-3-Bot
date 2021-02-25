@@ -4,6 +4,8 @@ async def Main(self, channel, message, user, emoji):
     if user.bot:
         return
     settings = self.database.get_settings(message.guild.id)
+    if "ActiveAnnouncements" not in settings.keys():
+        return
     if message.id in settings["ActiveAnnouncements"]:
         if str(emoji) == "<:GreenTick:743466991771451394>":
             status = "Yes"

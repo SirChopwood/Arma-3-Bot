@@ -131,6 +131,28 @@ class DiscordBot(discord.Client):
             arguments = message.content[1:].replace(str(command+" "), "")
             await self.run_file(command, message, arguments)
 
+    async def question(self, user, question, channel=None):  # Ask the user a question, specify a channel or it'll DM
+        if channel is not None:
+            await channel.send(content="", embed=embedtemplates.question(question, user.display_name))
+            response = await self.await_response(user)
+            if response is None:
+                await channel.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                         "You took too long to respond!"))
+                return None
+            return response
+        else:
+            try:
+                await user.send(content="", embed=embedtemplates.question(question, user.display_name))
+                response = await self.await_response(user)
+                if response is None:
+                    await user.send(content="", embed=embedtemplates.failure("Response Timed Out",
+                                                                             "You took too long to respond!"))
+                    return None
+                return response
+            except discord.Forbidden:
+                print(user.name, "Could not be messaged.")
+                return None
+
 
 if __name__ == '__main__':  # https://discord.com/oauth2/authorize?client_id=792538125196197940&scope=bot&permissions=8
     print("Bot Starting...")

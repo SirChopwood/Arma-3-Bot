@@ -27,6 +27,11 @@ async def Main(self):
             for announcement in self.database.get_all_announcements(guild.id):
                 settings = self.database.get_settings(guild.id)
 
+                now = datetime.datetime.utcnow().replace(second=0, microsecond=0)
+                optime = datetime.datetime.strptime(str(
+                    announcement["Operation"]["Date"] + " " + announcement["Operation"][
+                        "Time"]), '%d/%m/%Y %H:%M')
+
                 if now >= optime and announcement["MessageID"] in settings["ActiveAnnouncements"]:
                     settings["ActiveAnnouncements"].remove(announcement["MessageID"])
                     self.database.set_settings(guild.id, settings)
@@ -37,11 +42,6 @@ async def Main(self):
                         continue
                 except KeyError:
                     continue
-
-                now = datetime.datetime.utcnow().replace(second=0, microsecond=0)
-                optime = datetime.datetime.strptime(str(
-                    announcement["Operation"]["Date"] + " " + announcement["Operation"][
-                        "Time"]), '%d/%m/%Y %H:%M')
 
                 if now == (optime - datetime.timedelta(days=1)) and announcement["Reminders"]["24h"] is False:  # 24h
                     for section in self.database.get_all_sections(guild.id):

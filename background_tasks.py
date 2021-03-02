@@ -27,6 +27,11 @@ async def Main(self):
             for announcement in self.database.get_all_announcements(guild.id):
                 settings = self.database.get_settings(guild.id)
 
+                if now >= optime and announcement["MessageID"] in settings["ActiveAnnouncements"]:
+                    settings["ActiveAnnouncements"].remove(announcement["MessageID"])
+                    self.database.set_settings(guild.id, settings)
+                    continue
+
                 try:
                     if not settings["OpReminders"]:
                         continue
@@ -82,7 +87,4 @@ async def Main(self):
                     announcement["Reminders"]["1h"] = True
                     self.database.set_announcement(guild.id, announcement)
 
-                elif now >= optime and announcement["MessageID"] in settings["ActiveAnnouncements"]:
-                    settings["ActiveAnnouncements"].remove(announcement["MessageID"])
-                    self.database.set_settings(guild.id, settings)
         await asyncio.sleep(0.2)

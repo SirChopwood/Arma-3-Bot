@@ -15,7 +15,10 @@ async def Main(self, channel, message, user, emoji):
         if role.id == settings["AdminRole"]:
             admin_access = True
 
-    application = self.database.get_application(message.guild.id, message.id)
+    if "ApplicationResults" in settings.keys():
+        application = self.database.get_application(message.guild.id, message.id)
+    else:
+        return
 
     if channel.id == settings["ApplicationResults"] and admin_access:
         if str(emoji.name) == "YellowTick":

@@ -5,7 +5,8 @@ import importlib.util
 
 async def Main(self, channel, message, user, emoji):
     if len(message.embeds) == 1:
-        if message.embeds[0].title.startswith("Section"):
+        title = str(message.embeds[0].title)
+        if title.startswith("Section"):
             title = message.embeds[0].title
             title = title.replace("Section - ", "")
             page = int(message.embeds[0].footer.text)

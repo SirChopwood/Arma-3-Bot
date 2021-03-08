@@ -51,8 +51,11 @@ async def Main(self, channel, message, user, emoji):
                                                                           reason=reason.content, user=user2))
             await loa.add_reaction("<:PurpleTick:796199276853723146>")
             profile = self.database.get_user(message.guild.id, user.id)
-            profile["LOA"] = True
-            self.database.set_user(message.guild.id, profile)
+            if profile is None:
+                print(user.name, " has no profile.")
+            else:
+                profile["LOA"] = True
+                self.database.set_user(message.guild.id, profile)
 
             for announcement in self.database.get_all_announcements(message.guild.id):
                 now = datetime.datetime.utcnow()

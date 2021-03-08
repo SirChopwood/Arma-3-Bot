@@ -73,18 +73,28 @@ class DiscordBot(discord.Client):
                 spec.loader.exec_module(foo)
                 await foo.Main(self, channel, message, user, emoji)
 
-    async def on_member_join(self, user):
-        if user.bot:
+    async def on_member_join(self, member):
+        if member.bot:
             return
         embed = discord.Embed(title="Welcome!", colour=discord.Colour(0xff3333),
-                              description=str("Welcome to the server " + user.name + ". Please make sure you do >profile_register to gain access to the full server."),
+                              description=str("Welcome to the server " + member.name + ". Please make sure you do ``>register`` within the server to gain access to the full features of this bot. If you have any questions please ask server staff."),
                               timestamp=datetime.datetime.now())
         embed.set_footer(text="Arma3Bot by Ramiris#5376",
                          icon_url="https://cdn.discordapp.com/attachments/743445776491085855/795774307249946644/PFP2.png")
         try:
-            await user.send(content="", embed=embed)
+            await member.send(content="", embed=embed)
         except discord.Forbidden:
-            print(user.name, "Could not be messaged.")
+            print(member.name, "Could not be messaged.")
+
+        settings = self.database.get_settings(member.guild.id)
+
+        if "JoinRole" in settings.keys():
+            try:
+                role = member.guild.get_role(settings["JoinRole"])
+                await member.add_roles(role)
+            except discord.Forbidden:
+                print("")
+
 
     async def on_member_remove(self, user):
         sections = self.database.get_all_sections(user.guild.id)

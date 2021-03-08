@@ -95,7 +95,6 @@ class DiscordBot(discord.Client):
             except discord.Forbidden:
                 print("")
 
-
     async def on_member_remove(self, user):
         sections = self.database.get_all_sections(user.guild.id)
         for section in sections:

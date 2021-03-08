@@ -118,3 +118,22 @@ def application_header(title, questions=[]):
         questioncount += 1
         embed.add_field(name=str("Question " + str(questioncount)), value=question, inline=False)
     return embed
+
+
+def settings(self, guild_id):
+    guild = self.get_guild(guild_id)
+
+    if guild is None:
+        return None
+
+    settings = self.database.get_settings(guild_id)
+
+    embed = discord.Embed(title=str(guild.name + "'s Server Settings"), timestamp=datetime.datetime.now())
+    embed.set_thumbnail(url=guild.icon_url)
+
+    for key in settings:
+        if key in ["_id"]:
+            continue
+        else:
+            embed.add_field(name=key, value=str(settings[key]), inline=False)
+    return embed

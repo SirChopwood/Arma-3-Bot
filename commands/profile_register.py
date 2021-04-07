@@ -44,8 +44,13 @@ async def Main(self, message, command, arguments):
                                                                                 str(
                                                                                     "I do not have permissions to set your roles, " + message.author.display_name)))
             return
+
+    await self.run_file("setname", message, arguments)
     await message.channel.send(content="", embed=embedtemplates.success("User Registered", str("Welcome " + message.author.mention)))
     embed = embedtemplates.profile(self, message.guild.id, message.author)
     await message.channel.send(content="", embed=embed)
     for m in messages:
-        await m.delete()
+        try:
+            await m.delete()
+        except discord.Forbidden:
+            continue
